@@ -1,0 +1,7 @@
+.ec-btn-comprar,
+.ec-btn-finalizar,
+.ec-btn-entrar {
+  color: var(--color-font-white);
+  background-color: var(--color-btn-blue);
+  border: none;
+}

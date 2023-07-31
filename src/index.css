@@ -184,24 +184,6 @@ a:hover {
   width: 100%;
 }
 
-.ec-btn-comprar,
-.ec-btn-finalizar,
-.ec-btn-entrar {
-  color: var(--color-font-white);
-  background-color: var(--color-btn-blue);
-  border: none;
-}
-
-.ec-btn-voltar,
-.ec-btn-continuar,
-.ec-btn-show-more,
-.ec-btn-cancel,
-.ec-btn-new {
-  color: var(--color-btn-blue);
-  background-color: var(--color-bg-white);
-  border: 1.5px solid var(--color-border-blue);
-}
-
 .ec-btn-show-more {
   width: 100%;
   cursor: pointer;
