@@ -1,9 +1,11 @@
-import './App.css'
+import ProductDetails from './assets/routes/ProductDetails';
 
 function App() {
 
   return (
-    <h1>Eletronics Ecommerce</h1>
+    <>     
+      <ProductDetails />
+    </>
   );
 
 }
