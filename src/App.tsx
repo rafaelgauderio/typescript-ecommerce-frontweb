@@ -1,6 +1,9 @@
 import './App.css'
 import computerImg from './assets/computer.png';
 import HeaderClient from './components/headerClient';
+import ButtonBlue from './components/headerClient/ButtonBlue';
+import ButtonWhite from './components/headerClient/ButtonWhite';
+import ButtoWhite from './components/headerClient/ButtonWhite';
 
 function App() {
 
@@ -24,8 +27,8 @@ function App() {
             </div>
           </div>
           <div className="ec-btn-container">
-            <button className="ec-btn ec-btn-comprar">Comprar</button>
-            <button className="ec-btn ec-btn-voltar">Voltar</button>
+            <ButtonBlue></ButtonBlue>
+            <ButtonWhite></ButtonWhite>
           </div>
         </section>
       </main>
