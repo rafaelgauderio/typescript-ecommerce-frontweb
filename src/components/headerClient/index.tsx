@@ -1,4 +1,5 @@
 import cartImg from '../../assets/cart.svg';
+import './styles.css';
 
 const HeaderClient = () => {
 

@@ -87,11 +87,6 @@ header {
   padding: 0 15px;
 }
 
-.ec-header-client {
-  background-color: var(--color-bg-secondary);
-  color: var(--color-font-white);
-}
-
 .ec-header-admin-panel {
   background-color: var(--color-bg-tertiary);
   color: var(--color-font-white);

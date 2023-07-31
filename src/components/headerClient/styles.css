@@ -1,1 +1,5 @@
 
+.ec-header-client {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-font-white);
+  }
