@@ -1,9 +1,8 @@
 import './App.css'
 import computerImg from './assets/computer.png';
 import HeaderClient from './components/headerClient';
-import ButtonBlue from './components/headerClient/ButtonBlue';
-import ButtonWhite from './components/headerClient/ButtonWhite';
-import ButtoWhite from './components/headerClient/ButtonWhite';
+import ButtonBlue from './components/ButtonBlue';
+import ButtonWhite from './components/ButtonWhite';
 
 function App() {
 
