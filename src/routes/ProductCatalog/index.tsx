@@ -1,24 +1,15 @@
 import HeaderClient from '../../components/headerClient';
 import tableImg from '../../assets/tablet.png';
 import './styles.css';
+import SearchBar from '../../components/SearchBar';
 
 const ProductCatalog = () => {
     return (
         <>
             <HeaderClient></HeaderClient>
             <main>
-                <section id="catalog-details-section" className="ec-container">
-                    <form className="ec-search-bar ec-box-shadow">
-                        <button type="submit">
-                            <p>&#128270;</p>
-                            <span className="ec-search">Pesquisar</span>
-                        </button>
-                        <input type="text" placeholder="Nome do eletrônico" />
-                        <button type="reset">
-                            <p>&#128473;</p>
-                            <span className="ec-clean">Limpar</span>
-                        </button>
-                    </form>
+                <section id="catalog-details-section" className="ec-container">    
+                <SearchBar ></SearchBar>              
                     <div className="ec-catalog-cards ec-margin-top-20px ec-margin-bottom-20px">
                         <div className="ec-card-general">
                             <div className="ec-catalog-card-top ec-line-bottom">

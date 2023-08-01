@@ -195,57 +195,7 @@ a:hover {
 }
 /* button styles */
 
-/*search styles*/
-.ec-search-bar {
-  display: flex;
-  flex-direction: row;
-  height: 50px;
-  color: var(--color-font-primary);
-}
 
-.ec-search-bar input,
-.ec-search-bar button {
-  border: 1.5px solid var(--color-border-light);
-  background-color: var(--color-bg-white);
-}
-
-.ec-search-bar button[type="submit"] {
-  border-right: none;
-  border-radius: 8px 0 0 8px;
-}
-
-.ec-search-bar button[type="reset"] {
-  border-left: none;
-  border-radius: 0 8px 8px 0;
-}
-.ec-search-bar button {
-  color: var(--color-font-primary);
-  width: 50px;
-}
-
-.ec-search-bar input {
-  color: var(--color-font-primary);
-  padding: 5px 10px;
-  font-size: 18px;
-  border-right: none;
-  border-left: none;
-  width: calc(100% - 100px);
-}
-
-.ec-search-bar input:focus {
-  outline: none; /* remover a caixa de seleção em volta do campo input ao clicar */
-}
-
-.ec-search-bar input::placeholder {
-  color: var(--color-font-placeholder);
-  text-align: left;
-}
-
-.ec-box-shadow {
-  box-shadow: 2px 2px 4px 4px var(--color-shadow-box);
-  border-radius: 8px;
-}
-/*search styles*/
 
 /*form styles */
 
@@ -350,11 +300,7 @@ a:hover {
   .ec-btn-container {
     width: 240px;
   }
-
-  .ec-search-bar button {
-    width: 150px;
-  }
-
+  
   .ec-form-general h2 {
     font-size: 24px;
   }

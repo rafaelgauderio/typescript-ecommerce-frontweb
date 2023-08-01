@@ -2,11 +2,6 @@
   padding: 20px 0;
 }
 
-.ec-clean,
-.ec-search {
-  display: none;
-}
-
 .ec-catalog-cards {
   display: grid;
   grid-gap: 20px;
@@ -53,13 +48,4 @@
 .ec-card-general:hover {
   transform: scale(1.05);
   border: 1px solid var(--color-border-blue);
-}
-
-@media (min-width: 576px) {
-  .ec-clean,
-  .ec-search {
-    display: unset;
-    font-size: 14px;
-    padding: 10px;
-  }
 }
