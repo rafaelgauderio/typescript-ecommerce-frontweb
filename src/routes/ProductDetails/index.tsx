@@ -1,7 +1,4 @@
-import ButtonBlue from "../../../components/ButtonBlue";
-import ButtonWhite from "../../../components/ButtonWhite";
-import ProductDetailsCard from "../../../components/ProductDetailsCard";
-import HeaderClient from "../../../components/headerClient";
+
 import './styles.css';
 
 export default function ProductDetails() {

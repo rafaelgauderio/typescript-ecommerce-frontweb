@@ -1,10 +1,11 @@
-import ProductDetails from './assets/routes/ProductDetails';
+import React from "react";
+import ProductCatalog from "./routes/ProductCatalog";
 
 function App() {
 
   return (
     <>     
-      <ProductDetails />
+      <ProductCatalog />
     </>
   );
 
