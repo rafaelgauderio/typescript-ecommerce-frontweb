@@ -1,7 +1,9 @@
 import HeaderClient from '../../components/headerClient';
-import './styles.css';
 import SearchBar from '../../components/SearchBar';
 import ProductCatalogCard from '../../components/ProductCatalogCard';
+
+import './styles.css';
+import ButtonShowMore from '../../components/ButtonShowMore';
 
 const ProductCatalog = () => {
     return (
@@ -24,7 +26,7 @@ const ProductCatalog = () => {
                         <ProductCatalogCard />
                         <ProductCatalogCard />
                     </div>
-                    <button className="ec-btn ec-btn-show-more">Mostrar mais</button>
+                    <ButtonShowMore />
                 </section>
             </main>
         </>

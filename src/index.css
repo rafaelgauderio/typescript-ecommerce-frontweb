@@ -184,15 +184,7 @@ a:hover {
   width: 100%;
 }
 
-.ec-btn-show-more {
-  width: 100%;
-  cursor: pointer;
-  border-radius: 5px;
-  text-align: center;
-  font-weight: 700;
-  font-size: 18px;
-  padding: 15px;
-}
+
 /* button styles */
 
 
@@ -336,10 +328,7 @@ a:hover {
   }
 }
 
-@media (min-width: 768px) {
-  .ec-btn-show-more {
-    width: 260px;
-  }
+@media (min-width: 768px) { 
 
   .ec-table td:nth-child(1),
   .ec-table th:nth-child(1) {

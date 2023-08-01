@@ -1,0 +1,19 @@
+.ec-btn-show-more {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 15px;
+  color: var(--color-btn-blue);
+  background-color: var(--color-bg-white);
+  border: 1.5px solid var(--color-border-blue);
+}
+
+@media (min-width: 768px) {
+    .ec-btn-show-more {
+      width: 260px;
+    }
+}
+  
