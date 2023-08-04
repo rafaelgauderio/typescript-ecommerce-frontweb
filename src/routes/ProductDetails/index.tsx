@@ -20,7 +20,12 @@ const product: ProductDTO = {
         {
             id: 2,
             name: "Eletrônicos"
+        },
+        {
+            id:5,
+            name: "Notebooks"
         }
+        
     ],
     
 };
