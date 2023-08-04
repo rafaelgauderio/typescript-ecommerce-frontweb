@@ -1,9 +1,9 @@
-import HeaderClient from '../../components/headerClient';
 import SearchBar from '../../components/SearchBar';
 import ProductCatalogCard from '../../components/ProductCatalogCard';
 
 import './styles.css';
 import ButtonShowMore from '../../components/ButtonShowMore';
+import HeaderClient from '../../components/HeaderClient';
 
 const ProductCatalog = () => {
     return (

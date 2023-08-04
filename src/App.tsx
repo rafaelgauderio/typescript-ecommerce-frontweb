@@ -1,11 +1,10 @@
-import React from "react";
-import ProductCatalog from "./routes/ProductCatalog";
+import ProductDetails from "./routes/ProductDetails";
 
 function App() {
 
   return (
     <>     
-      <ProductCatalog />
+      <ProductDetails />
     </>
   );
 
