@@ -1,7 +1,5 @@
 import './styles.css';
 import tableImg from '../../assets/tablet.png';
-import ButtonShowMore from '../ButtonShowMore';
-
 
 export default function ProductCatalogCard() {
     return (
