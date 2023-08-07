@@ -40,7 +40,7 @@ export default function ProductDetails() {
                     <ProductDetailsCard product={product}></ProductDetailsCard>
                     <div className="ec-btn-container">
                         <ButtonBlue message={"Comprar"}></ButtonBlue>
-                        <ButtonWhite></ButtonWhite>
+                        <ButtonWhite message={"Voltar"}></ButtonWhite>
                     </div>
                 </section>
             </main>
