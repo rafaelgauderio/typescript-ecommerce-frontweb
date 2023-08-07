@@ -1,10 +1,14 @@
 import './styles.css';
 
-export default function ButtonBlue() {
+type Props = {
+    message: string;
+};
+
+export default function ButtonBlue( {message} : Props)  {
 
     return (
         <button className="ec-btn ec-btn-comprar">
-            Comprar
+            {message}            
         </button>
     );
 }
