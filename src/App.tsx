@@ -1,10 +1,10 @@
-import ProductDetails from "./routes/ProductDetails";
+import ProductCatalog from "./routes/ProductCatalog";
 
 function App() {
 
   return (
     <>     
-      <ProductDetails />
+      <ProductCatalog />
     </>
   );
 
