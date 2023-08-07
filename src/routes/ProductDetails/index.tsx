@@ -39,8 +39,8 @@ export default function ProductDetails() {
                 <section id="product-details-section" className="ec-container">
                     <ProductDetailsCard product={product}></ProductDetailsCard>
                     <div className="ec-btn-container">
-                        <ButtonBlue></ButtonBlue>
-                        <ButtonWhite></ButtonWhite>
+                        <ButtonBlue message={"Comprar"}></ButtonBlue>
+                        <ButtonWhite message={"Voltar"}></ButtonWhite>
                     </div>
                 </section>
             </main>
