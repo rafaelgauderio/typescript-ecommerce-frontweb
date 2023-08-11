@@ -3,7 +3,6 @@ import ProductCatalogCard from '../../../components/ProductCatalogCard';
 
 import './styles.css';
 import ButtonShowMore from '../../../components/ButtonShowMore';
-import HeaderClient from '../../../components/HeaderClient';
 import { ProductDTO } from '../../../models/product';
 
 const productMock: ProductDTO = {

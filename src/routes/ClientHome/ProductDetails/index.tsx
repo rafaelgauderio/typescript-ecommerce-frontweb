@@ -1,7 +1,6 @@
 
 import ButtonBlue from '../../../components/ButtonBlue';
 import ButtonWhite from '../../../components/ButtonWhite';
-import HeaderClient from '../../../components/HeaderClient';
 import ProductDetailsCard from '../../../components/ProductDetailsCard';
 import { ProductDTO } from '../../../models/product';
 import './styles.css';
