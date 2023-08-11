@@ -1,10 +1,10 @@
-import SearchBar from '../../components/SearchBar';
-import ProductCatalogCard from '../../components/ProductCatalogCard';
+import SearchBar from '../../../components/SearchBar';
+import ProductCatalogCard from '../../../components/ProductCatalogCard';
 
 import './styles.css';
-import ButtonShowMore from '../../components/ButtonShowMore';
-import HeaderClient from '../../components/HeaderClient';
-import { ProductDTO } from '../../models/product';
+import ButtonShowMore from '../../../components/ButtonShowMore';
+import HeaderClient from '../../../components/HeaderClient';
+import { ProductDTO } from '../../../models/product';
 
 const productMock: ProductDTO = {
     id: 5,
@@ -33,11 +33,10 @@ const productMock: ProductDTO = {
 const ProductCatalog = () => {
     return (
         <>
-            <HeaderClient></HeaderClient>
             <main>
                 <section id="catalog-details-section" className="ec-container">
                     <SearchBar ></SearchBar>
-                    <div className="ec-catalog-cards ec-margin-top-20px ec-margin-bottom-20px">                        
+                    <div className="ec-catalog-cards ec-margin-top-20px ec-margin-bottom-20px">
                         <ProductCatalogCard product={productMock} />
                         <ProductCatalogCard product={productMock} />
                         <ProductCatalogCard product={productMock} />
@@ -49,7 +48,7 @@ const ProductCatalog = () => {
                         <ProductCatalogCard product={productMock} />
                         <ProductCatalogCard product={productMock} />
                         <ProductCatalogCard product={productMock} />
-                        <ProductCatalogCard product={productMock} />                        
+                        <ProductCatalogCard product={productMock} />
                     </div>
                     <ButtonShowMore />
                 </section>

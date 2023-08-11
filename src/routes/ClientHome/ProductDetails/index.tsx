@@ -1,9 +1,9 @@
 
-import ButtonBlue from '../../components/ButtonBlue';
-import ButtonWhite from '../../components/ButtonWhite';
-import HeaderClient from '../../components/HeaderClient';
-import ProductDetailsCard from '../../components/ProductDetailsCard';
-import { ProductDTO } from '../../models/product';
+import ButtonBlue from '../../../components/ButtonBlue';
+import ButtonWhite from '../../../components/ButtonWhite';
+import HeaderClient from '../../../components/HeaderClient';
+import ProductDetailsCard from '../../../components/ProductDetailsCard';
+import { ProductDTO } from '../../../models/product';
 import './styles.css';
 
 const product: ProductDTO = {
@@ -33,8 +33,7 @@ const product: ProductDTO = {
 export default function ProductDetails() {
 
     return (
-        <>
-            <HeaderClient></HeaderClient>
+        <>            
             <main>
                 <section id="product-details-section" className="ec-container">
                     <ProductDetailsCard product={product}></ProductDetailsCard>
