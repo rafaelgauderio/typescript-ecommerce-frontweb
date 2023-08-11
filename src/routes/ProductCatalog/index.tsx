@@ -49,8 +49,7 @@ const ProductCatalog = () => {
                         <ProductCatalogCard product={productMock} />
                         <ProductCatalogCard product={productMock} />
                         <ProductCatalogCard product={productMock} />
-                        <ProductCatalogCard product={productMock} />
-                        
+                        <ProductCatalogCard product={productMock} />                        
                     </div>
                     <ButtonShowMore />
                 </section>
