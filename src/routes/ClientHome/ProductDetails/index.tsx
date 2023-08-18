@@ -5,6 +5,7 @@ import ProductDetailsCard from '../../../components/ProductDetailsCard';
 import './styles.css';
 import * as productService from '../../../services/product-services';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 /*
 const product: ProductDTO = {
@@ -51,7 +52,9 @@ export default function ProductDetails() {
                     }
                     <div className="ec-btn-container">
                         <ButtonBlue message={"Comprar"}></ButtonBlue>
-                        <ButtonWhite message={"Voltar"}></ButtonWhite>
+                        <Link to="/">
+                            <ButtonWhite  message={"Voltar"}></ButtonWhite>
+                        </Link>
                     </div>
                 </section>
             </main>
@@ -59,7 +62,4 @@ export default function ProductDetails() {
     );
 }
 
-function userParams() {
-    throw new Error('Function not implemented.');
-}
 
