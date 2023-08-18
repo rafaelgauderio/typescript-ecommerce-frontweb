@@ -2,9 +2,11 @@
 import ButtonBlue from '../../../components/ButtonBlue';
 import ButtonWhite from '../../../components/ButtonWhite';
 import ProductDetailsCard from '../../../components/ProductDetailsCard';
-import { ProductDTO } from '../../../models/product';
 import './styles.css';
+import * as productService from '../../../services/product-services';
+import { useParams } from 'react-router-dom';
 
+/*
 const product: ProductDTO = {
     id: 5,
     name: "Computador Core i5",
@@ -21,21 +23,32 @@ const product: ProductDTO = {
             name: "Eletrônicos"
         },
         {
-            id:5,
+            id: 5,
             name: "Notebooks"
         }
-        
+
     ],
-    
+
 };
+*/
 
 export default function ProductDetails() {
 
+    // objeto para receber ler os paramentros de rota
+    const objectParams = useParams();
+
+    // converter para Number (tudo nas requisicoes do protocolo http trafega como string)
+    // apelido productID definido em App.tsx
+    const product = productService.findProductById(Number(objectParams.productId));
+
     return (
-        <>            
+        <>
             <main>
                 <section id="product-details-section" className="ec-container">
-                    <ProductDetailsCard product={product}></ProductDetailsCard>
+                    {// renderização condicional para product não ser undenined
+                        product &&
+                        <ProductDetailsCard product={product}></ProductDetailsCard>
+                    }
                     <div className="ec-btn-container">
                         <ButtonBlue message={"Comprar"}></ButtonBlue>
                         <ButtonWhite message={"Voltar"}></ButtonWhite>
@@ -44,5 +57,9 @@ export default function ProductDetails() {
             </main>
         </>
     );
+}
+
+function userParams() {
+    throw new Error('Function not implemented.');
 }
 

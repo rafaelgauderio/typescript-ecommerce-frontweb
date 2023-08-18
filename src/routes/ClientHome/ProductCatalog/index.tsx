@@ -13,8 +13,8 @@ const ProductCatalog = () => {
                     <SearchBar ></SearchBar>
                     <div className="ec-catalog-cards ec-margin-top-20px ec-margin-bottom-20px">
                         {
-                            productService.findAll().map( (productMock) =>
-                            <ProductCatalogCard key={productMock.id} product={productMock}></ProductCatalogCard>
+                            productService.findAll().map((productMock) =>
+                                <ProductCatalogCard key={productMock.id} product={productMock}></ProductCatalogCard>
                             )
                         }
                     </div>
