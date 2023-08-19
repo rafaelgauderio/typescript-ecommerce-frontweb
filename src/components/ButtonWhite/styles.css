@@ -5,4 +5,5 @@
   color: var(--color-btn-blue);
   background-color: var(--color-bg-white);
   border: 1.5px solid var(--color-border-blue);
+  cursor: pointer;
 }
