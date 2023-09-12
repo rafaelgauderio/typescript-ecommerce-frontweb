@@ -3,9 +3,12 @@ import ButtonBlue from '../../../components/ButtonBlue';
 import ButtonWhite from '../../../components/ButtonWhite';
 import ProductDetailsCard from '../../../components/ProductDetailsCard';
 import './styles.css';
-import * as productService from '../../../services/product-services';
+// import * as productService from '../../../services/product-services';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { ProductDTO } from '../../../models/product';
+import axios from 'axios';
 
 /*
 const product: ProductDTO = {
@@ -33,14 +36,34 @@ const product: ProductDTO = {
 };
 */
 
+const host = "http://localhost:8080";
+
 export default function ProductDetails() {
 
     // objeto para receber ler os paramentros de rota
     const objectParams = useParams();
 
+    const [product, setProduct] = useState<ProductDTO>();
+
+    // dois parametros no useEffect: função quando monta o componente e lista de dependências a serem observadas.
+    useEffect(() => {
+
+        axios.get(`${host}/products/${objectParams.productId}`)
+            .then(requestResponse => {
+                //console.log("request response");
+                //console.log(requestResponse);
+                //console.log("object data");
+                //console.log(requestResponse.data);
+
+                setProduct(requestResponse.data);
+            });
+        //const produtoMockado = productService.findProductById(Number(objectParams.productId));        
+    }, []);
+
+    // usar o useEffect para que no momento que o componete for montado seja feita a requisição.
     // converter para Number (tudo nas requisicoes do protocolo http trafega como string)
     // apelido productID definido em App.tsx
-    const product = productService.findProductById(Number(objectParams.productId));
+
 
     return (
         <>
@@ -53,7 +76,7 @@ export default function ProductDetails() {
                     <div className="ec-btn-container">
                         <ButtonBlue message={"Comprar"}></ButtonBlue>
                         <Link to="/">
-                            <ButtonWhite  message={"Voltar"}></ButtonWhite>
+                            <ButtonWhite message={"Voltar"}></ButtonWhite>
                         </Link>
                     </div>
                 </section>
