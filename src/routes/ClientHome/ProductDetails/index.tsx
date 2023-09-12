@@ -6,6 +6,8 @@ import './styles.css';
 import * as productService from '../../../services/product-services';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { ProductDTO } from '../../../models/product';
 
 /*
 const product: ProductDTO = {
@@ -38,9 +40,21 @@ export default function ProductDetails() {
     // objeto para receber ler os paramentros de rota
     const objectParams = useParams();
 
+    const [product, setProduct] = useState<ProductDTO>();
+
+    // dois parametros no useEffect: função quando monta o componente e lista de dependências a serem observadas.
+    useEffect(() => {
+
+        const produtoMockado = productService.findProductById(Number(objectParams.productId));
+        setProduct(produtoMockado);
+
+    }, []);
+
+    // usar o useEffect para que no momento que o componete for montado seja feita a requisição.
+
     // converter para Number (tudo nas requisicoes do protocolo http trafega como string)
     // apelido productID definido em App.tsx
-    const product = productService.findProductById(Number(objectParams.productId));
+    
 
     return (
         <>

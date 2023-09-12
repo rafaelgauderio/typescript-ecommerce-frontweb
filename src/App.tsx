@@ -5,8 +5,6 @@ import ProductCatalog from "./routes/ClientHome/ProductCatalog";
 
 function App() {
 
-
-
   return (
     <BrowserRouter>
       <Routes>
