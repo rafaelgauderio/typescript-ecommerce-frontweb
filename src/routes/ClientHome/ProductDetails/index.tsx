@@ -3,7 +3,7 @@ import ButtonWhite from '../../../components/ButtonWhite';
 import ProductDetailsCard from '../../../components/ProductDetailsCard';
 import './styles.css';
  import * as productService from '../../../services/product-services';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ProductDTO } from '../../../models/product';
@@ -41,6 +41,8 @@ export default function ProductDetails() {
 
     const [product, setProduct] = useState<ProductDTO>();
 
+    const navigate = useNavigate();
+
     // dois parametros no useEffect: função quando monta o componente e lista de dependências a serem observadas.
     useEffect(() => {
 
@@ -53,7 +55,10 @@ export default function ProductDetails() {
                 setProduct(responseRequest.data);
             })
             .catch (error => {
-                console.log(error.response.data);
+                //console.log(error.response.data);
+                alert("Informaste um id de Produto inexistente.\nClick em ok para voltar para a página inicial");               
+                // direcionar para o catálogo caso informar um id que não existe
+                navigate("/");
             });
         //const produtoMockado = productService.findProductById(Number(objectParams.productId));        
     }, []);
@@ -70,10 +75,8 @@ export default function ProductDetails() {
                     {// renderização condicional para product não ser undefined
                     // operarador ternário para caso informar um productId inválido
                         product 
-                        ?
-                        <ProductDetailsCard product={product}></ProductDetailsCard>
-                        : 
-                        <h2>Código de produto inválido</h2>                                              
+                        &&
+                        <ProductDetailsCard product={product}></ProductDetailsCard>                                                                 
                     }
                     <div className="ec-btn-container">
                         <ButtonBlue message={"Comprar"}></ButtonBlue>
