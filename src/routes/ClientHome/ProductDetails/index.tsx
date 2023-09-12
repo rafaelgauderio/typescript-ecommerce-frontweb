@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ProductDTO } from '../../../models/product';
+import axios from 'axios';
 
 /*
 const product: ProductDTO = {
@@ -35,6 +36,7 @@ const product: ProductDTO = {
 };
 */
 
+const host = "http://localhost:8080";
 export default function ProductDetails() {
 
     // objeto para receber ler os paramentros de rota
@@ -45,16 +47,19 @@ export default function ProductDetails() {
     // dois parametros no useEffect: função quando monta o componente e lista de dependências a serem observadas.
     useEffect(() => {
 
-        const produtoMockado = productService.findProductById(Number(objectParams.productId));
-        setProduct(produtoMockado);
-
+        axios.get("http://localhost:8080/products/3")
+            .then(requestResponse => {
+                console.log(requestResponse);
+                console.log(requestResponse.data);
+                setProduct(requestResponse.data);
+            });
+        //const produtoMockado = productService.findProductById(Number(objectParams.productId));        
     }, []);
 
     // usar o useEffect para que no momento que o componete for montado seja feita a requisição.
-
     // converter para Number (tudo nas requisicoes do protocolo http trafega como string)
     // apelido productID definido em App.tsx
-    
+
 
     return (
         <>
@@ -67,7 +72,7 @@ export default function ProductDetails() {
                     <div className="ec-btn-container">
                         <ButtonBlue message={"Comprar"}></ButtonBlue>
                         <Link to="/">
-                            <ButtonWhite  message={"Voltar"}></ButtonWhite>
+                            <ButtonWhite message={"Voltar"}></ButtonWhite>
                         </Link>
                     </div>
                 </section>
