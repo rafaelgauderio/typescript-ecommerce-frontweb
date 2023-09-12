@@ -37,6 +37,7 @@ const product: ProductDTO = {
 */
 
 const host = "http://localhost:8080";
+
 export default function ProductDetails() {
 
     // objeto para receber ler os paramentros de rota
@@ -47,12 +48,12 @@ export default function ProductDetails() {
     // dois parametros no useEffect: função quando monta o componente e lista de dependências a serem observadas.
     useEffect(() => {
 
-        axios.get("http://localhost:8080/products/3")
+        axios.get(`${host}/products/${objectParams.productId}`)
             .then(requestResponse => {
-                console.log("request response");
-                console.log(requestResponse);
-                console.log("object data");
-                console.log(requestResponse.data);
+                //console.log("request response");
+                //console.log(requestResponse);
+                //console.log("object data");
+                //console.log(requestResponse.data);
 
                 setProduct(requestResponse.data);
             });

@@ -7,6 +7,7 @@ import { ProductDTO } from '../../../models/product';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const host = "http://localhost:8080";
 
 const ProductCatalog = () => {
 
@@ -16,7 +17,7 @@ const ProductCatalog = () => {
 
     useEffect ( ()=> {
         // requisição para quando montar o componet do catalogo
-        axios.get("http://localhost:8080/products?size=12")
+        axios.get(`${host}/products?size=12`)
             .then((requestPromiseResponse) => {
                 setProducts(requestPromiseResponse.data.content);
             });
