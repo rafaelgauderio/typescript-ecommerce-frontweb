@@ -3,7 +3,7 @@ import ButtonBlue from '../../../components/ButtonBlue';
 import ButtonWhite from '../../../components/ButtonWhite';
 import ProductDetailsCard from '../../../components/ProductDetailsCard';
 import './styles.css';
-import * as productService from '../../../services/product-services';
+// import * as productService from '../../../services/product-services';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -49,8 +49,11 @@ export default function ProductDetails() {
 
         axios.get("http://localhost:8080/products/3")
             .then(requestResponse => {
+                console.log("request response");
                 console.log(requestResponse);
+                console.log("object data");
                 console.log(requestResponse.data);
+
                 setProduct(requestResponse.data);
             });
         //const produtoMockado = productService.findProductById(Number(objectParams.productId));        
