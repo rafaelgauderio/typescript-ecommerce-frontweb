@@ -45,13 +45,15 @@ export default function ProductDetails() {
     useEffect(() => {
 
         productService.findProductById(Number(objectParams.productId))
-            .then(requestResponse => {
+            .then(responseRequest => {
                 //console.log("request response");
                 //console.log(requestResponse);
                 //console.log("object data");
                 //console.log(requestResponse.data);
-
-                setProduct(requestResponse.data);
+                setProduct(responseRequest.data);
+            })
+            .catch (error => {
+                console.log(error.response.data);
             });
         //const produtoMockado = productService.findProductById(Number(objectParams.productId));        
     }, []);
@@ -65,9 +67,13 @@ export default function ProductDetails() {
         <>
             <main>
                 <section id="product-details-section" className="ec-container">
-                    {// renderização condicional para product não ser undenined
-                        product &&
+                    {// renderização condicional para product não ser undefined
+                    // operarador ternário para caso informar um productId inválido
+                        product 
+                        ?
                         <ProductDetailsCard product={product}></ProductDetailsCard>
+                        : 
+                        <h2>Código de produto inválido</h2>                                              
                     }
                     <div className="ec-btn-container">
                         <ButtonBlue message={"Comprar"}></ButtonBlue>
