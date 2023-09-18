@@ -54,7 +54,7 @@ export default function ProductDetails() {
                 //console.log(requestResponse.data);
                 setProduct(responseRequest.data);
             })
-            .catch (error => {
+            .catch ( () => {
                 //console.log(error.response.data);
                 alert("Informaste um id de Produto inexistente.\nClick em ok para voltar para a página inicial");               
                 // direcionar para o catálogo caso informar um id que não existe
