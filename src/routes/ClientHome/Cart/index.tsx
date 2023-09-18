@@ -2,8 +2,29 @@ import './styles.css';
 
 import ButtonBlue from '../../../components/ButtonBlue';
 import ButtonWhite from '../../../components/ButtonWhite';
+import { useEffect } from 'react';
+import * as cartService from '../../../services/cart-service';
+import { OrderDTO, OrderItemDTO } from '../../../models/order';
 
+const item1: OrderItemDTO = new OrderItemDTO(
+    1,
+    1,
+    90.5,
+    "The Lord of the Rings",
+    "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/1-big.jpg"
+);
 
+const item2: OrderItemDTO = new OrderItemDTO(
+
+    2,
+    2,
+    2190.0,
+    "Smart TV",
+    "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/2-big.jpg"
+
+);
+
+/*
 const cartMockData = {
     items: [
         {
@@ -22,16 +43,20 @@ const cartMockData = {
         },
     ]
 }
+*/
 
 export default function Kart() {
 
-    const totalCart = () => {
-        let sum = 0.0;
-        cartMockData.items.map(item => (
-            sum += (item.quantity * item.price)
-        ))
-        return sum.toFixed(2);
-    }
+   const cartMockData : OrderDTO = new OrderDTO();
+
+    useEffect(() => {
+
+        cartMockData.items.unshift(item2);
+        cartMockData.items.unshift(item1);
+
+        cartService.saveCart(cartMockData);
+
+    }, []);
 
     return (
         <main>
@@ -61,7 +86,7 @@ export default function Kart() {
 
 
                     <div className="ec-cart-total-container">
-                        <h3>R$ {totalCart()}</h3>
+                        <h3>R$ {cartMockData.totalKart}</h3>
                     </div>
                 </div>
                 <div className="ec-btn-container">

@@ -9,10 +9,12 @@ import { useEffect, useState } from 'react';
 const ProductCatalog = () => {
 
 
+    /*
     const objectTest : CategoryDTO = {
         id: 15,
         name: "Tablet"
     }
+    */
 
 
     // useState para armazenas o estado dentro do component
