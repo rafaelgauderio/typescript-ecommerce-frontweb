@@ -1,14 +1,12 @@
-
 import ButtonBlue from '../../../components/ButtonBlue';
 import ButtonWhite from '../../../components/ButtonWhite';
 import ProductDetailsCard from '../../../components/ProductDetailsCard';
 import './styles.css';
-// import * as productService from '../../../services/product-services';
-import { useParams } from 'react-router-dom';
+ import * as productService from '../../../services/product-services';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ProductDTO } from '../../../models/product';
-import axios from 'axios';
 
 /*
 const product: ProductDTO = {
@@ -36,8 +34,6 @@ const product: ProductDTO = {
 };
 */
 
-const host = "http://localhost:8080";
-
 export default function ProductDetails() {
 
     // objeto para receber ler os paramentros de rota
@@ -45,17 +41,24 @@ export default function ProductDetails() {
 
     const [product, setProduct] = useState<ProductDTO>();
 
+    const navigate = useNavigate();
+
     // dois parametros no useEffect: função quando monta o componente e lista de dependências a serem observadas.
     useEffect(() => {
 
-        axios.get(`${host}/products/${objectParams.productId}`)
-            .then(requestResponse => {
+        productService.findProductById(Number(objectParams.productId))
+            .then(responseRequest => {
                 //console.log("request response");
                 //console.log(requestResponse);
                 //console.log("object data");
                 //console.log(requestResponse.data);
-
-                setProduct(requestResponse.data);
+                setProduct(responseRequest.data);
+            })
+            .catch ( () => {
+                //console.log(error.response.data);
+                alert("Informaste um id de Produto inexistente.\nClick em ok para voltar para a página inicial");               
+                // direcionar para o catálogo caso informar um id que não existe
+                navigate("/");
             });
         //const produtoMockado = productService.findProductById(Number(objectParams.productId));        
     }, []);
@@ -69,9 +72,11 @@ export default function ProductDetails() {
         <>
             <main>
                 <section id="product-details-section" className="ec-container">
-                    {// renderização condicional para product não ser undenined
-                        product &&
-                        <ProductDetailsCard product={product}></ProductDetailsCard>
+                    {// renderização condicional para product não ser undefined
+                    // operarador ternário para caso informar um productId inválido
+                        product 
+                        &&
+                        <ProductDetailsCard product={product}></ProductDetailsCard>                                                                 
                     }
                     <div className="ec-btn-container">
                         <ButtonBlue message={"Comprar"}></ButtonBlue>

@@ -1,15 +1,15 @@
-import { ProductDTO } from "../models/product";
+import axios from "axios";
+import { BASE_URL } from "../utils/system";
 
-export function findAll(): ProductDTO[] {
-    return (
-        products
-    );
+export function findAll() {
+    return axios.get(`${BASE_URL}/products?size=12`);
 }
 
-export function findProductById(id: number): ProductDTO | undefined {
-    return products.find(produto => produto.id === id); 
+export function findProductById(id: number) {
+    return axios.get(`${BASE_URL}/products/${id}`);
 }
 
+/* mock product data
 const products: ProductDTO[] = [
     {
         "id": 1,
@@ -185,3 +185,4 @@ const products: ProductDTO[] = [
         ]
     }
 ]
+*/
