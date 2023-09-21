@@ -72,6 +72,11 @@ export default function Kart() {
         setCart(cartService.getCart());        
     }
 
+    const handleIncreaseProduct =  (productId : number) => {
+        cartService.increaseItemCart(productId);
+        setCart(cartService.getCart());
+    }
+
     return (
         <main>
             <section id="cart-container-section" className="ec-container">
@@ -94,7 +99,7 @@ export default function Kart() {
                                                 <div className="ec-cart-item-quantity-container">
                                                     <div className="ec-cart-item-quantity-btn">-</div>
                                                     <p>{item.quantity}</p>
-                                                    <div className="ec-cart-item-quantity-btn">+</div>
+                                                    <div className="ec-cart-item-quantity-btn" onClick={ () => handleIncreaseProduct(item.productId)}>+</div>
                                                 </div>
                                             </div>
                                         </div>

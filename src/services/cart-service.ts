@@ -26,3 +26,12 @@ export function cleanCart () {
     cartLocalStorage.clearLocalStorage();
 }
 
+export function increaseItemCart (productId : number) {
+    const cart = getCart();
+    const itemCart = cart.items.find ( item => item.productId ===productId);
+    if(itemCart !==undefined) {
+        itemCart.quantity = itemCart.quantity + 1;
+        cartLocalStorage.save(cart);
+    }
+}
+
