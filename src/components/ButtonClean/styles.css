@@ -1,0 +1,7 @@
+.ec-btn-clean{
+
+  color: var(--color-font-white);
+  background-color: var(--color-danger);
+  border: none;
+  cursor: pointer;
+}

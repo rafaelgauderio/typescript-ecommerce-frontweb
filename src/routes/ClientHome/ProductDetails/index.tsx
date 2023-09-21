@@ -2,7 +2,8 @@ import ButtonBlue from '../../../components/ButtonBlue';
 import ButtonWhite from '../../../components/ButtonWhite';
 import ProductDetailsCard from '../../../components/ProductDetailsCard';
 import './styles.css';
- import * as productService from '../../../services/product-services';
+import * as productService from '../../../services/product-services';
+import * as cartService from '../../../services/cart-service';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -54,9 +55,9 @@ export default function ProductDetails() {
                 //console.log(requestResponse.data);
                 setProduct(responseRequest.data);
             })
-            .catch ( () => {
+            .catch(() => {
                 //console.log(error.response.data);
-                alert("Informaste um id de Produto inexistente.\nClick em ok para voltar para a página inicial");               
+                alert("Informaste um id de Produto inexistente.\nClick em ok para voltar para a página inicial");
                 // direcionar para o catálogo caso informar um id que não existe
                 navigate("/");
             });
@@ -67,19 +68,30 @@ export default function ProductDetails() {
     // converter para Number (tudo nas requisicoes do protocolo http trafega como string)
     // apelido productID definido em App.tsx
 
+    function handleBuyProduct () {
+        // só adiciona ao carrinho se o produto não for undefined
+        if(product !==undefined) {
+            cartService.addProductToCart(product);
+            navigate("/cart");
+        }
+     
+    }
+
 
     return (
         <>
             <main>
                 <section id="product-details-section" className="ec-container">
                     {// renderização condicional para product não ser undefined
-                    // operarador ternário para caso informar um productId inválido
-                        product 
+                        // operarador ternário para caso informar um productId inválido
+                        product
                         &&
-                        <ProductDetailsCard product={product}></ProductDetailsCard>                                                                 
+                        <ProductDetailsCard product={product}></ProductDetailsCard>
                     }
                     <div className="ec-btn-container">
-                        <ButtonBlue message={"Comprar"}></ButtonBlue>
+                        <div onClick={handleBuyProduct}>
+                            <ButtonBlue message={"Comprar"}></ButtonBlue>
+                        </div>
                         <Link to="/">
                             <ButtonWhite message={"Voltar"}></ButtonWhite>
                         </Link>

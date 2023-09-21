@@ -2,10 +2,13 @@ import './styles.css';
 
 import ButtonBlue from '../../../components/ButtonBlue';
 import ButtonWhite from '../../../components/ButtonWhite';
-import { useEffect } from 'react';
 import * as cartService from '../../../services/cart-service';
-import { OrderDTO, OrderItemDTO } from '../../../models/order';
+import { OrderDTO } from '../../../models/order';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import ButtonClean from '../../../components/ButtonClean';
 
+/*
 const item1: OrderItemDTO = new OrderItemDTO(
     1,
     1,
@@ -17,12 +20,13 @@ const item1: OrderItemDTO = new OrderItemDTO(
 const item2: OrderItemDTO = new OrderItemDTO(
 
     2,
-    2,
+    3,
     2190.0,
     "Smart TV",
     "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/2-big.jpg"
 
 );
+
 
 /*
 const cartMockData = {
@@ -47,53 +51,88 @@ const cartMockData = {
 
 export default function Kart() {
 
-   const cartMockData : OrderDTO = new OrderDTO();
+    /*
+    const cart : OrderDTO = new OrderDTO ();
 
     useEffect(() => {
-
-        cartMockData.items.unshift(item2);
-        cartMockData.items.unshift(item1);
-
-        cartService.saveCart(cartMockData);
+        cart.items.push(item1);
+        cart.items.push(item2);
+        cartService.saveCart(cart);
 
     }, []);
+    */
+
+    // iniciar o useState com o valor que estiver no localStorage
+    const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
+
+    function handleClearCart () {
+        // limpa o local storage
+        cartService.cleanCart();
+        // renderiza a tela novamente com o carrinho atualizado
+        setCart(cartService.getCart());        
+    }
+
+    const handleIncreaseProduct =  (productId : number) => {
+        cartService.increaseItemCart(productId);
+        setCart(cartService.getCart());
+    }
+
+    const handleDecreaseProduct = (productId : number) => {
+        cartService.decreaseItemCart(productId);
+        setCart(cartService.getCart);
+    }
 
     return (
         <main>
             <section id="cart-container-section" className="ec-container">
-                <div className="ec-card-general ec-margin-bottom-20px">
+                {/* condicional para printar menssagem na tela se o carrinho estiver vazio */}
+                {
+                    cart.items.length === 0 ? (
+                        <div>
+                            <h2 className="ec-section-title ec-margin-bottom-20px">Seu carrinho de compras está vazio</h2>
+                        </div>
+                    ) : (
+                        <div className="ec-card-general ec-margin-bottom-20px">
 
-                    {
-                        cartMockData.items.map(item => (
-                            <div key={item.productId} className="ec-cart-item-container ec-line-bottom">
-                                <div className="ec-cart-item-left">
-                                    <img src={item.imgUrl} alt={item.name} />
-                                    <div className="ec-cart-item-description">
-                                        <h3>{item.name}</h3>
-                                        <div className="ec-cart-item-quantity-container">
-                                            <div className="ec-cart-item-quantity-btn">-</div>
-                                            <p>{item.quantity}</p>
-                                            <div className="ec-cart-item-quantity-btn">+</div>
+                            {
+                                cart.items.map(item => (
+                                    <div key={item.productId} className="ec-cart-item-container ec-line-bottom">
+                                        <div className="ec-cart-item-left">
+                                            <img src={item.imgUrl} alt={item.name} />
+                                            <div className="ec-cart-item-description">
+                                                <h3>{item.name}</h3>
+                                                <div className="ec-cart-item-quantity-container">
+                                                    <div className="ec-cart-item-quantity-btn" onClick={() => handleDecreaseProduct(item.productId)}>-</div>
+                                                    <p>{item.quantity}</p>
+                                                    <div className="ec-cart-item-quantity-btn" onClick={ () => handleIncreaseProduct(item.productId)}>+</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="ec-cart-item-right">
+                                            R$ {item.subTotalItem.toFixed(2)}
                                         </div>
                                     </div>
-                                </div>
-                                <div className="ec-cart-item-right">
-                                    R$ {(item.price * item.quantity).toFixed(2)}
-                                </div>
+                                ))
+                            }
+
+
+                            <div className="ec-cart-total-container">
+                                <h3>R$ {cart.totalKart.toFixed(2)}</h3>
                             </div>
-                        ))
-                    }
-
-
-                    <div className="ec-cart-total-container">
-                        <h3>R$ {cartMockData.totalKart}</h3>
-                    </div>
-                </div>
+                        </div>
+                    )
+                }
                 <div className="ec-btn-container">
                     <ButtonBlue message={"Finalizar Pedido"}>
                     </ButtonBlue>
-                    <ButtonWhite message={"Continuar Comprando"}>
-                    </ButtonWhite>
+                    <Link to="/product-catalog">
+                        <ButtonWhite message={"Continuar Comprando"}>
+                        </ButtonWhite>
+                    </Link>
+                    <div onClick={handleClearCart}>
+                    <ButtonClean className="bg-danger text-white" message={"Limpar Carrinho"}>
+                    </ButtonClean>
+                    </div>
                 </div>
             </section>
         </main >
