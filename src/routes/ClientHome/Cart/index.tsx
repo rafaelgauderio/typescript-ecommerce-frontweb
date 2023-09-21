@@ -5,6 +5,7 @@ import ButtonWhite from '../../../components/ButtonWhite';
 import * as cartService from '../../../services/cart-service';
 import { OrderDTO } from '../../../models/order';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 /*
 const item1: OrderItemDTO = new OrderItemDTO(
@@ -106,8 +107,10 @@ export default function Kart() {
                 <div className="ec-btn-container">
                     <ButtonBlue message={"Finalizar Pedido"}>
                     </ButtonBlue>
-                    <ButtonWhite message={"Continuar Comprando"}>
-                    </ButtonWhite>
+                    <Link to="/product-catalog">
+                        <ButtonWhite message={"Continuar Comprando"}>
+                        </ButtonWhite>
+                    </Link>
                 </div>
             </section>
         </main >
