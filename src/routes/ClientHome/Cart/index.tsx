@@ -6,6 +6,7 @@ import * as cartService from '../../../services/cart-service';
 import { OrderDTO } from '../../../models/order';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import ButtonClean from '../../../components/ButtonClean';
 
 /*
 const item1: OrderItemDTO = new OrderItemDTO(
@@ -64,6 +65,13 @@ export default function Kart() {
     // iniciar o useState com o valor que estiver no localStorage
     const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
 
+    function handleClearCart () {
+        // limpa o local storage
+        cartService.cleanCart();
+        // renderiza a tela novamente
+        setCart(cartService.getCart());        
+    }
+
     return (
         <main>
             <section id="cart-container-section" className="ec-container">
@@ -111,6 +119,10 @@ export default function Kart() {
                         <ButtonWhite message={"Continuar Comprando"}>
                         </ButtonWhite>
                     </Link>
+                    <div onClick={handleClearCart}>
+                    <ButtonClean className="bg-danger text-white" message={"Limpar Carrinho"}>
+                    </ButtonClean>
+                    </div>
                 </div>
             </section>
         </main >

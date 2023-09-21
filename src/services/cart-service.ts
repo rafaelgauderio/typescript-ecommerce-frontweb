@@ -22,3 +22,7 @@ export function addProductToCart (product : ProductDTO) {
     }
 }
 
+export function cleanCart () {
+    cartLocalStorage.clearLocalStorage();
+}
+
