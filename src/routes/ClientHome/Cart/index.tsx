@@ -2,7 +2,7 @@ import './styles.css';
 
 import ButtonBlue from '../../../components/ButtonBlue';
 import ButtonWhite from '../../../components/ButtonWhite';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as cartService from '../../../services/cart-service';
 import { OrderDTO, OrderItemDTO } from '../../../models/order';
 
@@ -17,12 +17,13 @@ const item1: OrderItemDTO = new OrderItemDTO(
 const item2: OrderItemDTO = new OrderItemDTO(
 
     2,
-    2,
+    3,
     2190.0,
     "Smart TV",
     "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/2-big.jpg"
 
 );
+
 
 /*
 const cartMockData = {
@@ -47,16 +48,19 @@ const cartMockData = {
 
 export default function Kart() {
 
-   const cartMockData : OrderDTO = new OrderDTO();
+    /*
+    const cart : OrderDTO = new OrderDTO ();
 
     useEffect(() => {
-
-        cartMockData.items.unshift(item2);
-        cartMockData.items.unshift(item1);
-
-        cartService.saveCart(cartMockData);
+        cart.items.push(item1);
+        cart.items.push(item2);
+        cartService.saveCart(cart);
 
     }, []);
+    */
+
+    // iniciar o useState com o valor que estiver no localStorage
+    const [cart, setCart] = useState<OrderDTO>(cartService.getCart());   
 
     return (
         <main>
@@ -64,7 +68,7 @@ export default function Kart() {
                 <div className="ec-card-general ec-margin-bottom-20px">
 
                     {
-                        cartMockData.items.map(item => (
+                        cart.items.map(item => (
                             <div key={item.productId} className="ec-cart-item-container ec-line-bottom">
                                 <div className="ec-cart-item-left">
                                     <img src={item.imgUrl} alt={item.name} />
@@ -86,7 +90,7 @@ export default function Kart() {
 
 
                     <div className="ec-cart-total-container">
-                        <h3>R$ {cartMockData.totalKart}</h3>
+                        <h3>R$ {cart.totalKart}</h3>
                     </div>
                 </div>
                 <div className="ec-btn-container">
