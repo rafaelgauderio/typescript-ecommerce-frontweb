@@ -90,7 +90,7 @@ export default function Kart() {
                                             </div>
                                         </div>
                                         <div className="ec-cart-item-right">
-                                            R$ {item.subTotalItem}
+                                            R$ {item.subTotalItem.toFixed(2)}
                                         </div>
                                     </div>
                                 ))
@@ -98,7 +98,7 @@ export default function Kart() {
 
 
                             <div className="ec-cart-total-container">
-                                <h3>R$ {cart.totalKart}</h3>
+                                <h3>R$ {cart.totalKart.toFixed(2)}</h3>
                             </div>
                         </div>
                     )
