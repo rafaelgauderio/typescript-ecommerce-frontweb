@@ -2,10 +2,11 @@ import './styles.css';
 
 import ButtonBlue from '../../../components/ButtonBlue';
 import ButtonWhite from '../../../components/ButtonWhite';
-import { useEffect, useState } from 'react';
 import * as cartService from '../../../services/cart-service';
-import { OrderDTO, OrderItemDTO } from '../../../models/order';
+import { OrderDTO } from '../../../models/order';
+import { useState } from 'react';
 
+/*
 const item1: OrderItemDTO = new OrderItemDTO(
     1,
     1,
@@ -60,39 +61,48 @@ export default function Kart() {
     */
 
     // iniciar o useState com o valor que estiver no localStorage
-    const [cart, setCart] = useState<OrderDTO>(cartService.getCart());   
+    const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
 
     return (
         <main>
             <section id="cart-container-section" className="ec-container">
-                <div className="ec-card-general ec-margin-bottom-20px">
+                {/* condicional para printar menssagem na tela se o carrinho estiver vazio */}
+                {
+                    cart.items.length === 0 ? (
+                        <div>
+                            <h2 className="ec-section-title ec-margin-bottom-20px">Seu carrinho de compras está vazio</h2>
+                        </div>
+                    ) : (
+                        <div className="ec-card-general ec-margin-bottom-20px">
 
-                    {
-                        cart.items.map(item => (
-                            <div key={item.productId} className="ec-cart-item-container ec-line-bottom">
-                                <div className="ec-cart-item-left">
-                                    <img src={item.imgUrl} alt={item.name} />
-                                    <div className="ec-cart-item-description">
-                                        <h3>{item.name}</h3>
-                                        <div className="ec-cart-item-quantity-container">
-                                            <div className="ec-cart-item-quantity-btn">-</div>
-                                            <p>{item.quantity}</p>
-                                            <div className="ec-cart-item-quantity-btn">+</div>
+                            {
+                                cart.items.map(item => (
+                                    <div key={item.productId} className="ec-cart-item-container ec-line-bottom">
+                                        <div className="ec-cart-item-left">
+                                            <img src={item.imgUrl} alt={item.name} />
+                                            <div className="ec-cart-item-description">
+                                                <h3>{item.name}</h3>
+                                                <div className="ec-cart-item-quantity-container">
+                                                    <div className="ec-cart-item-quantity-btn">-</div>
+                                                    <p>{item.quantity}</p>
+                                                    <div className="ec-cart-item-quantity-btn">+</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="ec-cart-item-right">
+                                            R$ {item.subTotalItem}
                                         </div>
                                     </div>
-                                </div>
-                                <div className="ec-cart-item-right">
-                                    R$ {(item.price * item.quantity).toFixed(2)}
-                                </div>
+                                ))
+                            }
+
+
+                            <div className="ec-cart-total-container">
+                                <h3>R$ {cart.totalKart}</h3>
                             </div>
-                        ))
-                    }
-
-
-                    <div className="ec-cart-total-container">
-                        <h3>R$ {cart.totalKart}</h3>
-                    </div>
-                </div>
+                        </div>
+                    )
+                }
                 <div className="ec-btn-container">
                     <ButtonBlue message={"Finalizar Pedido"}>
                     </ButtonBlue>
