@@ -35,3 +35,16 @@ export function increaseItemCart (productId : number) {
     }
 }
 
+export function decreaseItemCart (productId: number) {
+    const cart = getCart();
+    const itemCart = cart.items.find(item => item.productId ===productId);
+    if(itemCart !==undefined) {
+        itemCart.quantity = itemCart.quantity - 1;
+        if( itemCart.quantity === 0 || itemCart.quantity < 0) {
+            // excluir o item do carrinho se a quantidade for igual a zero
+            cart.items = cart.items.filter(item => item.productId !== productId);
+        }
+        cartLocalStorage.save(cart);
+    }
+}
+

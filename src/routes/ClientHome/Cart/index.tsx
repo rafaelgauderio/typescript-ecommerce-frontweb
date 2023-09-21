@@ -68,13 +68,18 @@ export default function Kart() {
     function handleClearCart () {
         // limpa o local storage
         cartService.cleanCart();
-        // renderiza a tela novamente
+        // renderiza a tela novamente com o carrinho atualizado
         setCart(cartService.getCart());        
     }
 
     const handleIncreaseProduct =  (productId : number) => {
         cartService.increaseItemCart(productId);
         setCart(cartService.getCart());
+    }
+
+    const handleDecreaseProduct = (productId : number) => {
+        cartService.decreaseItemCart(productId);
+        setCart(cartService.getCart);
     }
 
     return (
@@ -97,7 +102,7 @@ export default function Kart() {
                                             <div className="ec-cart-item-description">
                                                 <h3>{item.name}</h3>
                                                 <div className="ec-cart-item-quantity-container">
-                                                    <div className="ec-cart-item-quantity-btn">-</div>
+                                                    <div className="ec-cart-item-quantity-btn" onClick={() => handleDecreaseProduct(item.productId)}>-</div>
                                                     <p>{item.quantity}</p>
                                                     <div className="ec-cart-item-quantity-btn" onClick={ () => handleIncreaseProduct(item.productId)}>+</div>
                                                 </div>
