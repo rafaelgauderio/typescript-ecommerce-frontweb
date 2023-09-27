@@ -6,20 +6,20 @@ import * as productService from "../../../services/product-services";
 import { ProductDTO } from '../../../models/product';
 import { useEffect, useState } from 'react';
 
-const ProductCatalog = () => {
-
-
-    /*
+ /*
     const objectTest : CategoryDTO = {
         id: 15,
         name: "Tablet"
     }
     */
 
-
+const ProductCatalog = () => {
+   
     // useState para armazenas o estado dentro do component
     // retorna um list de produtos do backend , valor inicial é uma empty list
     const [products, setProducts] = useState<ProductDTO []>([]);
+
+    const [productName, setProductName] = useState<string>("");
 
     useEffect ( ()=> {
 
@@ -38,17 +38,21 @@ const ProductCatalog = () => {
 
         // requisição para quando montar o componet do catalogo
         // parametro incial é pagina 0 e sem informar o name do produto string vazia
-        productService.findAllPageRequest(0, "")
+        productService.findAllPageRequest(0, productName)
             .then((requestPromiseResponse) => {
                 setProducts(requestPromiseResponse.data.content);
             });
-    },[])
+    },[productName]) // lista de dependências do use effect
+
+    const handleSearch = (searchBarText : string) => {
+        setProductName(searchBarText);
+    }
 
     return (
         <>
             <main>
                 <section id="catalog-details-section" className="ec-container">
-                    <SearchBar ></SearchBar>
+                    <SearchBar eventOnSearch={handleSearch}></SearchBar>
                     <div className="ec-catalog-cards ec-margin-top-20px ec-margin-bottom-20px">
                         {
                             
