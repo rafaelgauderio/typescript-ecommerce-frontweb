@@ -32,6 +32,9 @@ const ProductCatalog = () => {
         name: ""
     });
 
+    // se for a última página tem que desabilitar o botão mostrar mais produtos
+    const [isLastPage, setIsLastPage] = useState<boolean>(false);
+
     useEffect(() => {
 
         // JSON.stringify -> converte de objeto para string
@@ -55,6 +58,8 @@ const ProductCatalog = () => {
                 const nextProductsPage = requestPromiseResponse.data.content;
                 // concatendo os dois arrays de produtos
                 setProducts(products.concat(nextProductsPage));
+                // setando o valor da ultima página para true se for a ultima página da busca
+                setIsLastPage(requestPromiseResponse.data.last);
             });
     }, [queryParameters]) // lista de dependências do use effect
 
@@ -71,10 +76,10 @@ const ProductCatalog = () => {
 
     const handleNextPageOnClick = () => {
         // setar novo valor da página
-            setQueryparameters({
-                ...queryParameters,
-                page: queryParameters.page + 1
-            });
+        setQueryparameters({
+            ...queryParameters,
+            page: queryParameters.page + 1
+        });
     }
     return (
         <>
@@ -90,9 +95,14 @@ const ProductCatalog = () => {
                             )
                         }
                     </div>
-                    <div onClick={handleNextPageOnClick}>
-                        <ButtonShowMore />
-                    </div>
+                    {/*renderizar o botão  'Mostrar mais' somente se não for a ultima busca */}
+                    {
+                        isLastPage === false &&
+                        <div onClick={handleNextPageOnClick}>
+                            <ButtonShowMore />
+                        </div>
+                    }
+
                 </section>
             </main>
         </>
