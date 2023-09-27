@@ -37,7 +37,8 @@ const ProductCatalog = () => {
         */
 
         // requisição para quando montar o componet do catalogo
-        productService.findAll()
+        // parametro incial é pagina 0 e sem informar o name do produto string vazia
+        productService.findAllPageRequest(0, "")
             .then((requestPromiseResponse) => {
                 setProducts(requestPromiseResponse.data.content);
             });
