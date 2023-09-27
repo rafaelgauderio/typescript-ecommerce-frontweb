@@ -51,17 +51,31 @@ const ProductCatalog = () => {
         // parametro incial é pagina 0 e sem informar o name do produto string vazia
         productService.findAllPageRequest(queryParameters.page, queryParameters.name)
             .then((requestPromiseResponse) => {
-                setProducts(requestPromiseResponse.data.content);
+                // concatendo os dados da página anterior com o da próxima página
+                const nextProductsPage = requestPromiseResponse.data.content;
+                // concatendo os dois arrays de produtos
+                setProducts(products.concat(nextProductsPage));
             });
     }, [queryParameters]) // lista de dependências do use effect
 
     const handleSearch = (searchBarText: string) => {
+        // sempre que fizer uma busca começar a lista vazia, para não concatenar 
+        // com os produtos que já estiverem na tela e voltar para a página 0        
+        setProducts([]);
         setQueryparameters({
             ...queryParameters,
-            name: searchBarText
+            name: searchBarText,
+            page: 0
         });
     }
 
+    const handleNextPageOnClick = () => {
+        // setar novo valor da página
+            setQueryparameters({
+                ...queryParameters,
+                page: queryParameters.page + 1
+            });
+    }
     return (
         <>
             <main>
@@ -76,7 +90,9 @@ const ProductCatalog = () => {
                             )
                         }
                     </div>
-                    <ButtonShowMore />
+                    <div onClick={handleNextPageOnClick}>
+                        <ButtonShowMore />
+                    </div>
                 </section>
             </main>
         </>
