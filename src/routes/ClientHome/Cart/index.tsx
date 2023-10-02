@@ -4,9 +4,10 @@ import ButtonBlue from '../../../components/ButtonBlue';
 import ButtonWhite from '../../../components/ButtonWhite';
 import * as cartService from '../../../services/cart-service';
 import { OrderDTO } from '../../../models/order';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ButtonClean from '../../../components/ButtonClean';
+import { ContextCartNumber } from '../../../utils/global-context-cart';
 
 /*
 const item1: OrderItemDTO = new OrderItemDTO(
@@ -65,21 +66,27 @@ export default function Kart() {
     // iniciar o useState com o valor que estiver no localStorage
     const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
 
+    const {setGlobalContextCartNumber} = useContext(ContextCartNumber);
+
     function handleClearCart () {
         // limpa o local storage
         cartService.cleanCart();
         // renderiza a tela novamente com o carrinho atualizado
-        setCart(cartService.getCart());        
+        setCart(cartService.getCart());   
+        // atualiza a quantidade de itens do carrinho para zero ao limpar todos os itens
+        setGlobalContextCartNumber(cartService.getCart().items.length);     
     }
 
     const handleIncreaseProduct =  (productId : number) => {
-        cartService.increaseItemCart(productId);
+        cartService.increaseItemCart(productId);        
         setCart(cartService.getCart());
     }
 
     const handleDecreaseProduct = (productId : number) => {
-        cartService.decreaseItemCart(productId);
+        cartService.decreaseItemCart(productId);        
         setCart(cartService.getCart);
+        // atualizando o número de itens do carinho quando remover um item do carinho
+        setGlobalContextCartNumber(cartService.getCart().items.length);
     }
 
     return (

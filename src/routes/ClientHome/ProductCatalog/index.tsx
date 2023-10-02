@@ -69,8 +69,8 @@ const ProductCatalog = () => {
         setProducts([]);
         setQueryparameters({
             ...queryParameters,
-            name: searchBarText,
-            page: 0
+            page: 0,
+            name: searchBarText,            
         });
     }
 

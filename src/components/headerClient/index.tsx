@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import cartImg from '../../assets/cart.svg';
 import './styles.css';
+import CartIcon from '../CartIcon';
 
 const HeaderClient = () => {
 
@@ -12,11 +12,11 @@ const HeaderClient = () => {
                 </Link>
                 <div className="ec-navbar-header-right">
                     <div className="ec-menu-items-container">
-                        <div className="ec-menu-item">
-                            <Link to='/cart'>
-                                <img src={cartImg} alt="Carrinho de compras" />
-                            </Link>
-                        </div>
+                        <Link to='/cart'>
+                            <div className="ec-menu-item">
+                                <CartIcon></CartIcon>
+                            </div>
+                        </Link>
                     </div>
                     <Link to="/login">
                         Entrar
