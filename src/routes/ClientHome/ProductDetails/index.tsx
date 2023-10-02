@@ -6,8 +6,9 @@ import * as productService from '../../../services/product-services';
 import * as cartService from '../../../services/cart-service';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { ProductDTO } from '../../../models/product';
+import { ContextCartNumber } from '../../../utils/global-context-cart';
 
 /*
 const product: ProductDTO = {
@@ -44,6 +45,8 @@ export default function ProductDetails() {
 
     const navigate = useNavigate();
 
+    const {setGlobalContextCartNumber} = useContext(ContextCartNumber);
+
     // dois parametros no useEffect: função quando monta o componente e lista de dependências a serem observadas.
     useEffect(() => {
 
@@ -72,6 +75,8 @@ export default function ProductDetails() {
         // só adiciona ao carrinho se o produto não for undefined
         if(product !==undefined) {
             cartService.addProductToCart(product);
+            // atualizar o número de intens do carrinho, antes de voltar para a pagina de carrinho
+            setGlobalContextCartNumber(cartService.getCart().items.length);
             navigate("/cart");
         }
      

@@ -1,16 +1,22 @@
 import cartImg from '../../assets/cart.svg';
 import './styles.css';
-import * as cartService from '../../services/cart-service';
-import { useState } from 'react';
+import { useContext } from 'react';
+import { ContextCartNumber } from '../../utils/global-context-cart';
 
 const CartIcon = () => {
 
-    const [cart, setCart] = useState(cartService.getCart());
+    // chamando o contenxto da aplicação cada vez que alterar os itens do carrinho
+    const { globalContextCartNumber } = useContext(ContextCartNumber);
 
     return (
         <>
             <img src={cartImg} alt="Carrinho de compras" />
-            <div className="ec-cart-number">{cart.items.length}</div>
+            {/* só renderiza a bolinha com quantidade se hover itens no carrinho */}
+            {
+                globalContextCartNumber >= 1 &&
+                <div className="ec-cart-number">{globalContextCartNumber}</div>
+            }
+
         </>
     );
 }
