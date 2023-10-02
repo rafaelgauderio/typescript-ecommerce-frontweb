@@ -2,10 +2,8 @@ import { useState } from 'react';
 import './styles.css';
 
 type Args = {
-    eventOnSearch: Function;
+    eventOnSearch: (...args : unknown[]) => void;
 }
-
-
 
 export default function SearchBar({ eventOnSearch }: Args) {
 
@@ -27,7 +25,6 @@ export default function SearchBar({ eventOnSearch }: Args) {
         setTextSearchBar("");
         eventOnSearch(textSearchBar); // refazer a busca com o texto como sendo um string vazia
     }
-
 
     // use effect fica escutando o estado do handleSearchBar e reage as alterações
 
