@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './styles.css';
 
 type Args = {
-    eventOnSearch: (...args : unknown[]) => void;
+    eventOnSearch: (...args : string[]) => void;
 }
 
 export default function SearchBar({ eventOnSearch }: Args) {
