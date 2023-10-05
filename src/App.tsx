@@ -5,6 +5,7 @@ import ProductCatalog from "./routes/ClientHome/ProductCatalog";
 import Cart from "./routes/ClientHome/Cart";
 import { useState } from "react";
 import { ContextCartNumber } from "./utils/global-context-cart";
+import Login from "./routes/ClientHome/Login";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="product-catalog" element={<ProductCatalog />}> </Route>
         <Route path="product-details/:productId" element={<ProductDetails />}></Route>
         <Route path="cart" element={<Cart />}></Route>
+        <Route path="login" element={<Login />}></Route>  
       </Route >
       {/*elemento navite para redirecionar*/}
       <Route path="*" element={<Navigate to="/" />}> </Route>
