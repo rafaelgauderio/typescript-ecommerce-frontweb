@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { loginRequest } from '../../../services/authentication';
 import './styles.css';
+import { CredentialsDTO } from '../../../models/authentication';
+import * as authenticationService from '../../../services/authentication-service';
 
 const Login = () => {
 
-    const [formData, setFormData] = useState<CredentialDTO>({
+    const [formData, setFormData] = useState<CredentialsDTO>({
         // valores iniciais
         username: '',
         password: ''
@@ -12,7 +13,13 @@ const Login = () => {
 
     const handleSubmitForm = (event: any) => {
         event.preventDefault();
-        loginRequest(formData);
+        authenticationService.loginRequest(formData)
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.log("Login error: " + error);
+            })
     }
 
     const handleInputOnChange = (event: any) => {
@@ -20,7 +27,7 @@ const Login = () => {
         const inputValue = event.target.value;
         setFormData({
             ...formData,
-            [inputName] : inputValue
+            [inputName]: inputValue
         })
     }
 
