@@ -15,6 +15,15 @@ const Login = () => {
         loginRequest(formData);
     }
 
+    const handleInputOnChange = (event: any) => {
+        const inputName = event.target.name;
+        const inputValue = event.target.value;
+        setFormData({
+            ...formData,
+            [inputName] : inputValue
+        })
+    }
+
     return (
 
         <main>
@@ -25,6 +34,9 @@ const Login = () => {
                         <div className="ec-form-inputs-container">
                             <div>
                                 <input
+                                    name="username"
+                                    value={formData.username}
+                                    onChange={handleInputOnChange}
                                     className="ec-form-input"
                                     type="text"
                                     placeholder="Email" />
@@ -32,6 +44,9 @@ const Login = () => {
                             </div>
                             <div>
                                 <input
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleInputOnChange}
                                     className="ec-form-input"
                                     type="password"
                                     placeholder="Senha" />
