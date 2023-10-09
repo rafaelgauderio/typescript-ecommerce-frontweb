@@ -15,7 +15,8 @@ const Login = () => {
         event.preventDefault();
         authenticationService.loginRequest(formData)
             .then(response => {
-                console.log(response.data);
+                authenticationService.saveAccessToken(response.data.access_token);
+                //console.log(response.data);
             })
             .catch(error => {
                 console.log("Login error: " + error);

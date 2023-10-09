@@ -41,8 +41,8 @@ export function saveAccessToken(token : string) : void {
     accessTokenRepository.saveToken(token);
 }
 
-export function getAccessToken() : void {
-    accessTokenRepository.getToken();
+export function getAccessToken() : string | null | undefined {
+    return accessTokenRepository.getToken();
 }
 
 // se o usuário não tiver um token salvo no localStorage
