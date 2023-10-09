@@ -2,7 +2,7 @@ import QueryString from "qs";
 import { CredentialsDTO } from "../models/authentication";
 import { CLIENT_ID, CLIENT_SECRET } from "../utils/system";
 import { AxiosPromise, AxiosRequestConfig } from "axios";
-import { requestBackend } from "./request";
+import { requestBackend } from "../utils/request";
 import * as accessTokenRepository from '../localStorage/access-token-repository';
 
 const encryptedString = window.btoa(CLIENT_ID + ":" + CLIENT_SECRET);
@@ -41,8 +41,8 @@ export function saveAccessToken(token : string) : void {
     accessTokenRepository.saveToken(token);
 }
 
-export function getAccessToken() : void {
-    accessTokenRepository.getToken();
+export function getAccessToken() : string | null | undefined {
+    return accessTokenRepository.getToken();
 }
 
 // se o usuário não tiver um token salvo no localStorage

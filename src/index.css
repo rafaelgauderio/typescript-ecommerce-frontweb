@@ -88,11 +88,6 @@ header {
   padding: 0 15px;
 }
 
-.ec-header-admin-panel {
-  background-color: var(--color-bg-tertiary);
-  color: var(--color-font-white);
-}
-
 nav {
   display: flex;
   flex-direction: row;
