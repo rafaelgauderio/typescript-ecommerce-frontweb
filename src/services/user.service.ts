@@ -1,13 +1,13 @@
-import { requestBackend } from "./request";
-import * as authenticationService from '../services/authentication-service';
+import { requestBackend } from "../utils/request";
+import { AxiosRequestConfig } from "axios";
 
-const authorizationHeader = {
-    Authorization: "Bearer" + authenticationService.getAccessToken()
-}
 
 export function findUser() {
-    return requestBackend({
+
+    const configuration: AxiosRequestConfig = {
         url: "/users/me",
-        headers: authorizationHeader        
-    });
+        withCredentials: true
+    }
+
+    return requestBackend(configuration);
 }

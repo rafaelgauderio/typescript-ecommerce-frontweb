@@ -2,7 +2,7 @@ import QueryString from "qs";
 import { CredentialsDTO } from "../models/authentication";
 import { CLIENT_ID, CLIENT_SECRET } from "../utils/system";
 import { AxiosPromise, AxiosRequestConfig } from "axios";
-import { requestBackend } from "./request";
+import { requestBackend } from "../utils/request";
 import * as accessTokenRepository from '../localStorage/access-token-repository';
 
 const encryptedString = window.btoa(CLIENT_ID + ":" + CLIENT_SECRET);

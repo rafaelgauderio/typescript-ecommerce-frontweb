@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from "axios";
-import { requestBackend } from "./request";
+import { requestBackend } from "../utils/request";
 
 export function findAllPageRequest(pagina: number, nome: string, tamanho = 12, ordem = "name") {
     const configuration: AxiosRequestConfig = {
