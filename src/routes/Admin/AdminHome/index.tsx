@@ -6,16 +6,22 @@ import * as userService from '../../../services/user.service';
 const AdminHome = () => {
 
     const [user, setUser] = useState<UserDTO>();
+    //const navigate = useNavigate();
 
     useEffect(() => {
         userService.findUser()
             .then(response => {
                 console.log(response.data);
                 setUser(response.data);
-            })
+            });
+            /*
             .catch((error) => {
+                if(error.response.status ===401) {
+                    navigate("/login");
+                }
                 console.log("Error: " + error);
             })
+            */
     }, []);
 
 
