@@ -1,9 +1,10 @@
 import QueryString from "qs";
-import { CredentialsDTO } from "../models/authentication";
+import { AccessTokenPayloadDTO, CredentialsDTO } from "../models/authentication";
 import { CLIENT_ID, CLIENT_SECRET } from "../utils/system";
 import { AxiosPromise, AxiosRequestConfig } from "axios";
 import { requestBackend } from "../utils/request";
 import * as accessTokenRepository from '../localStorage/access-token-repository';
+import jwtDecode from "jwt-decode";
 
 const encryptedString = window.btoa(CLIENT_ID + ":" + CLIENT_SECRET);
 
@@ -50,4 +51,19 @@ export function getAccessToken() : string | null | undefined {
 export function logout() : void{
     accessTokenRepository.removeToken();
 }
+
+export function getAccessTokenPayload() : AccessTokenPayloadDTO | undefined {
+    try {
+        const accessToken = accessTokenRepository.getToken();
+        if (accessToken==null) {
+            return undefined;
+        } else {
+            return (jwtDecode(accessToken) as AccessTokenPayloadDTO);
+        }
+    } catch (error) {
+        return undefined;
+    }
+}
+
+
 
