@@ -52,7 +52,7 @@ export function logout(): void {
     accessTokenRepository.removeToken();
 }
 
-export function getAccessTokenPayload(): AccessTokenPayloadDTO | undefined {
+export function getAccessTokenPayload(): AccessTokenPayloadDTO  {
     try {
         const accessToken = accessTokenRepository.getToken();
         if (accessToken == null) {
@@ -71,7 +71,8 @@ export const userIsAuthenticated = (): boolean => {
     // instante do token ainda não chegou instante da data de agora
 
     const instantNow = Date.now();    
-    const instantTokenPayload = getAccessTokenPayload().exp * 1000;
+    const instantTokenPayload = getAccessTokenPayload()?.exp * 1000;      
+    
     if (instantTokenPayload > instantNow) {
         return true; // ainda não experiou o token e usuário está autenticado
     } else {
