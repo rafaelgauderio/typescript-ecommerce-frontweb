@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import ProductDetails from "./routes/ClientHome/ProductDetails";
 import ClientHome from "./routes/ClientHome";
 import ProductCatalog from "./routes/ClientHome/ProductCatalog";
@@ -8,6 +8,8 @@ import { ContextCartNumber } from "./utils/global-context-cart";
 import Login from "./routes/ClientHome/Login";
 import Admin from "./routes/Admin";
 import AdminHome from "./routes/Admin/AdminHome";
+import {history} from './utils/browser-history';
+import { unstable_HistoryRouter as UnstableHistoryHouter} from "react-router-dom";
 
 function App() {
 
@@ -17,7 +19,7 @@ function App() {
   return (   
     < ContextCartNumber.Provider value = {{ globalContextCartNumber, setGlobalContextCartNumber }
 }>
-  <BrowserRouter>
+  <UnstableHistoryHouter history={history}>
     <Routes>
       <Route path="/" element={<ClientHome />}>
         <Route index element={<ProductCatalog />} ></Route>
@@ -33,7 +35,7 @@ function App() {
       {/*elemento navite para redirecionar*/}
       <Route path="*" element={<Navigate to="/" />}> </Route>
     </Routes >
-  </BrowserRouter >
+  </UnstableHistoryHouter >
     </ContextCartNumber.Provider >
   );
 
