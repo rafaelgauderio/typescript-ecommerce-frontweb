@@ -5,7 +5,6 @@ import ButtonShowMore from '../../../components/ButtonShowMore';
 import * as productService from "../../../services/product-services";
 import { ProductDTO } from '../../../models/product';
 import { useEffect, useState } from 'react';
-import { userIsAuthenticated } from '../../../services/authentication-service';
 
 /*
    const objectTest : CategoryDTO = {
@@ -38,7 +37,7 @@ const ProductCatalog = () => {
 
     useEffect(() => {
 
-        console.log("user is authenticated? ", userIsAuthenticated());
+        //console.log("user is authenticated? ", userIsAuthenticated());
 
         // JSON.stringify -> converte de objeto para string
         // JSON.parse     ->  convrtet de string para objeto
