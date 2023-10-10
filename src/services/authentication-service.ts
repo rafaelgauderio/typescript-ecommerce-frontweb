@@ -8,7 +8,7 @@ import jwtDecode from "jwt-decode";
 
 const encryptedString = window.btoa(CLIENT_ID + ":" + CLIENT_SECRET);
 
-export function loginRequest(loginData: CredentialsDTO) : AxiosPromise {
+export function loginRequest(loginData: CredentialsDTO): AxiosPromise {
     // cabeçalho da requisição
     const requestHeaders = {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -38,24 +38,24 @@ export function loginRequest(loginData: CredentialsDTO) : AxiosPromise {
     //console.log(requestBody);
 }
 
-export function saveAccessToken(token : string) : void {
+export function saveAccessToken(token: string): void {
     accessTokenRepository.saveToken(token);
 }
 
-export function getAccessToken() : string | null | undefined {
+export function getAccessToken(): string | null | undefined {
     return accessTokenRepository.getToken();
 }
 
 // se o usuário não tiver um token salvo no localStorage
 // ele não consegue fazer requisições a recursos protegidos (não está logado)
-export function logout() : void{
+export function logout(): void {
     accessTokenRepository.removeToken();
 }
 
-export function getAccessTokenPayload() : AccessTokenPayloadDTO | undefined {
+export function getAccessTokenPayload(): AccessTokenPayloadDTO | undefined {
     try {
         const accessToken = accessTokenRepository.getToken();
-        if (accessToken==null) {
+        if (accessToken == null) {
             return undefined;
         } else {
             return (jwtDecode(accessToken) as AccessTokenPayloadDTO);
@@ -63,6 +63,26 @@ export function getAccessTokenPayload() : AccessTokenPayloadDTO | undefined {
     } catch (error) {
         return undefined;
     }
+}
+
+// testar se o usuário está autenticado
+export const userIsAuthenticated = (): boolean => {
+    // verificar se a data do token não expirou // - tempo do token tem que ser maior que o date.now()
+    // instante do token ainda não chegou instante da data de agora
+
+    const instantNow = Date.now();    
+    const instantTokenPayload = getAccessTokenPayload().exp * 1000;
+    if (instantTokenPayload > instantNow) {
+        return true; // ainda não experiou o token e usuário está autenticado
+    } else {
+        return false;
+    }
+
+
+
+
+
+
 }
 
 

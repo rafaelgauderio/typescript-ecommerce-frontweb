@@ -17,9 +17,9 @@ const Login = () => {
             .then(response => {
                 authenticationService.saveAccessToken(response.data.access_token);
                 //console.log(response.data);
-                console.log(authenticationService.getAccessTokenPayload());
-                console.log(authenticationService.getAccessTokenPayload()?.user_name);
-                console.log(authenticationService.getAccessTokenPayload()?.scope);
+                //console.log(authenticationService.getAccessTokenPayload());
+                //console.log(authenticationService.getAccessTokenPayload()?.user_name);
+                //console.log(authenticationService.getAccessTokenPayload()?.scope);
             })
             .catch(error => {
                 console.log("Login error: " + error);
