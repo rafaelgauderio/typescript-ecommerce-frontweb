@@ -1,5 +1,5 @@
 import QueryString from "qs";
-import { AccessTokenPayloadDTO, CredentialsDTO } from "../models/authentication";
+import { AccessTokenPayloadDTO, CredentialsDTO, RoleEnum } from "../models/authentication";
 import { CLIENT_ID, CLIENT_SECRET } from "../utils/system";
 import { AxiosPromise, AxiosRequestConfig } from "axios";
 import { requestBackend } from "../utils/request";
@@ -52,7 +52,7 @@ export function logout(): void {
     accessTokenRepository.removeToken();
 }
 
-export function getAccessTokenPayload(): AccessTokenPayloadDTO  {
+export function getAccessTokenPayload(): AccessTokenPayloadDTO {
     try {
         const accessToken = accessTokenRepository.getToken();
         if (accessToken == null) {
@@ -70,21 +70,33 @@ export const userIsAuthenticated = (): boolean => {
     // verificar se a data do token não expirou // - tempo do token tem que ser maior que o date.now()
     // instante do token ainda não chegou instante da data de agora
 
-    const instantNow = Date.now();    
-    const instantTokenPayload = getAccessTokenPayload()?.exp * 1000;      
-    
+    const instantNow = Date.now();
+    const instantTokenPayload = getAccessTokenPayload()?.exp * 1000;
+
     if (instantTokenPayload > instantNow) {
         return true; // ainda não experiou o token e usuário está autenticado
     } else {
         return false;
     }
-
-
-
-
-
-
 }
 
+// testar se o usuário logado possui algum dos perfis 
+// se a rota não tiver nenhum regra necessário retorna true
+// caso contrário tem que testar se o perfil do usuário logado includes a authorities necessária para acessar aquela rota
+export const userHasAnyRoles = (rolesArray: RoleEnum[]): boolean => {
 
+    if (rolesArray.length === 0) {
+        return true;
+    }
+    const accessTokenPayload = getAccessTokenPayload();
+    if (accessTokenPayload !== undefined) {
+        for (let i = 0; i < rolesArray.length; i++) {
+            if (accessTokenPayload.authorities.includes(rolesArray[i])) {
+                return true;
+            }
+        }
+        //return rolesArray.some(role => accessTokenPayload.authorites.includes(role));
+    }
+    return false;
+}
 
