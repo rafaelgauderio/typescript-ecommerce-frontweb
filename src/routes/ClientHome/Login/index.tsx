@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './styles.css';
 import { CredentialsDTO } from '../../../models/authentication';
 import * as authenticationService from '../../../services/authentication-service';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
@@ -11,11 +12,15 @@ const Login = () => {
         password: ''
     });
 
+    const navigate = useNavigate();
+
     const handleSubmitForm = (event: any) => {
         event.preventDefault();
         authenticationService.loginRequest(formData)
             .then(response => {
                 authenticationService.saveAccessToken(response.data.access_token);
+                // ir para o carrinho após o login
+                navigate("/cart");
                 //console.log(response.data);
                 //console.log(authenticationService.getAccessTokenPayload());
                 //console.log(authenticationService.getAccessTokenPayload()?.user_name);
