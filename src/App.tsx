@@ -32,7 +32,8 @@ function App() {
 
           <Route path="/admin/" element={
             // só mostra o Admin (children do PrivateRoute) se o usuário estiver autenticado
-            <PrivateRoute>
+            // só acessa a rota admin pro usuário que tiver a role admin
+            <PrivateRoute arrayRoles={['ROLE_ADMIN']}>
               <Admin />
             </PrivateRoute>}>
             <Route index element={<AdminHome></AdminHome>}></Route>
