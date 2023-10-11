@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
 import './styles.css';
 import produtcsIcon from '../../assets/products.svg';
 import homeIcon from '../../assets/home.svg';
+import LoggedInUser from '../LoggedInUser';
 
 
 const HeaderAdmin = () => {
@@ -21,10 +21,7 @@ const HeaderAdmin = () => {
                             <p className="ec-menu-item-active">Produtos</p>
                         </div>
                     </div>
-                    <div className="ec-logged-user">
-                        <p>Rafael de Luca</p>
-                        <a href="#">Sair</a>
-                    </div>
+                    <LoggedInUser></LoggedInUser>
                 </div>
             </nav>
         </header>

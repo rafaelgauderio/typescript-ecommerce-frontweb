@@ -3,7 +3,7 @@ import ProductDetails from "./routes/ClientHome/ProductDetails";
 import ClientHome from "./routes/ClientHome";
 import ProductCatalog from "./routes/ClientHome/ProductCatalog";
 import Cart from "./routes/ClientHome/Cart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ContextCartNumber } from "./utils/global-context-cart";
 import Login from "./routes/ClientHome/Login";
 import Admin from "./routes/Admin";
@@ -11,37 +11,57 @@ import AdminHome from "./routes/Admin/AdminHome";
 import { history } from './utils/browser-history';
 import { unstable_HistoryRouter as UnstableHistoryRouter } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
-
+import { AccessTokenPayloadDTO } from "./models/authentication";
+import { GlobalContextToken } from "./utils/global-context-token";
+import * as authenticationService from './services/authentication-service';
+import * as cartService from './services/cart-service';
 function App() {
 
   const [globalContextCartNumber, setGlobalContextCartNumber] = useState<number>(0);
 
-  /* provendo o number no cart na aplicacao toda */
-  return (
-    < ContextCartNumber.Provider value={{ globalContextCartNumber, setGlobalContextCartNumber }
-    }>
-      <UnstableHistoryRouter history={history}>
-        <Routes>
-          <Route path="/" element={<ClientHome />}>
-            <Route index element={<ProductCatalog />} ></Route>
-            <Route path="product-catalog" element={<ProductCatalog />}> </Route>
-            <Route path="product-details/:productId" element={<ProductDetails />}></Route>
-            <Route path="cart" element={<Cart />}></Route>
-            <Route path="login" element={<Login />}></Route>
-          </Route >
+  const [globalContextTokenPayload, setGlobalContextTokenPayload] = useState<AccessTokenPayloadDTO>();
 
-          <Route path="/admin/" element={
-            // só mostra o Admin (children do PrivateRoute) se o usuário estiver autenticado
-            <PrivateRoute>
-              <Admin />
-            </PrivateRoute>}>
-            <Route index element={<AdminHome></AdminHome>}></Route>
-          </Route>
-          {/*elemento navite para redirecionar*/}
-          <Route path="*" element={<Navigate to="/" />}> </Route>
-        </Routes >
-      </UnstableHistoryRouter >
-    </ContextCartNumber.Provider >
+
+  useEffect(() => {
+
+    // inicar a contagem do carinho no começo da API com o dados do carinho salvos no localStorage
+    setGlobalContextCartNumber(cartService.getCart().items.length);
+
+    if (authenticationService.userIsAuthenticated() == true) {
+      const tokenPayload = authenticationService.getAccessTokenPayload();
+      setGlobalContextTokenPayload(tokenPayload);
+    }
+  }, []);
+
+  /* provendo o number no cart e o token payload na aplicacao toda */
+  return (
+    <GlobalContextToken.Provider value={{ globalContextTokenPayload, setGlobalContextTokenPayload }}>
+      < ContextCartNumber.Provider value={{ globalContextCartNumber, setGlobalContextCartNumber }
+      }>
+        <UnstableHistoryRouter history={history}>
+          <Routes>
+            <Route path="/" element={<ClientHome />}>
+              <Route index element={<ProductCatalog />} ></Route>
+              <Route path="product-catalog" element={<ProductCatalog />}> </Route>
+              <Route path="product-details/:productId" element={<ProductDetails />}></Route>
+              <Route path="cart" element={<Cart />}></Route>
+              <Route path="login" element={<Login />}></Route>
+            </Route >
+
+            <Route path="/admin/" element={
+              // só mostra o Admin (children do PrivateRoute) se o usuário estiver autenticado
+              // só acessa a rota admin pro usuário que tiver a role admin
+              <PrivateRoute arrayRoles={['ROLE_ADMIN']}>
+                <Admin />
+              </PrivateRoute>}>
+              <Route index element={<AdminHome></AdminHome>}></Route>
+            </Route>
+            {/*elemento navite para redirecionar*/}
+            <Route path="*" element={<Navigate to="/" />}> </Route>
+          </Routes >
+        </UnstableHistoryRouter >
+      </ContextCartNumber.Provider >
+    </GlobalContextToken.Provider>
   );
 
 }

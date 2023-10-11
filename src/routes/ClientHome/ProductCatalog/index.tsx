@@ -5,7 +5,6 @@ import ButtonShowMore from '../../../components/ButtonShowMore';
 import * as productService from "../../../services/product-services";
 import { ProductDTO } from '../../../models/product';
 import { useEffect, useState } from 'react';
-import { getAccessTokenPayload, userHasAnyRoles, userIsAuthenticated } from '../../../services/authentication-service';
 
 /*
    const objectTest : CategoryDTO = {
