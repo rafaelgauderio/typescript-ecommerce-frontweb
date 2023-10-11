@@ -14,7 +14,7 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    const handleSubmitForm = (event: any) => {
+    const handleSubmitForm = (event: React.FormEvent<HTMLDivElement>) => {
         event.preventDefault();
         authenticationService.loginRequest(formData)
             .then(response => {
