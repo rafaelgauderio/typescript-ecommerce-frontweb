@@ -17,12 +17,16 @@ const Login = () => {
             .then(response => {
                 authenticationService.saveAccessToken(response.data.access_token);
                 //console.log(response.data);
+                //console.log(authenticationService.getAccessTokenPayload());
+                //console.log(authenticationService.getAccessTokenPayload()?.user_name);
+                //console.log(authenticationService.getAccessTokenPayload()?.scope);
             })
             .catch(error => {
                 console.log("Login error: " + error);
             })
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleInputOnChange = (event: any) => {
         const inputName = event.target.name;
         const inputValue = event.target.value;
