@@ -3,6 +3,8 @@ import './styles.css';
 import { CredentialsDTO } from '../../../models/authentication';
 import * as authenticationService from '../../../services/authentication-service';
 import { useNavigate } from 'react-router-dom';
+import { GlobalContextToken } from '../../../utils/global-context-token';
+import {useContext} from 'react';
 
 const Login = () => {
 
@@ -14,11 +16,16 @@ const Login = () => {
 
     const navigate = useNavigate();
 
+    const {setGlobalContextTokenPayload} = useContext(GlobalContextToken);
+
     const handleSubmitForm = (event: React.FormEvent<HTMLDivElement>) => {
         event.preventDefault();
         authenticationService.loginRequest(formData)
             .then(response => {
+                //salvar o token
                 authenticationService.saveAccessToken(response.data.access_token);
+                // atualizar o contexto do payload do local storage
+                setGlobalContextTokenPayload(authenticationService.getAccessTokenPayload());
                 // ir para o carrinho após o login
                 navigate("/cart");
                 //console.log(response.data);

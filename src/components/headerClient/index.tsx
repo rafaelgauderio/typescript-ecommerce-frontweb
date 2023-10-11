@@ -3,9 +3,15 @@ import './styles.css';
 import CartIcon from '../CartIcon';
 import adminIcon from '../../assets/admin.svg';
 import * as authenticationService from '../../services/authentication-service';
+import { GlobalContextToken } from '../../utils/global-context-token';
+import {useContext} from 'react';
 
 
 const HeaderClient = () => {
+
+    // component admin vai ficar observando o contexto global da API para ver se é renderizado
+    // ou não de acordo com qual perfil do usuário logado
+    const {globalContextTokenPayload} = useContext(GlobalContextToken);
 
     return (
         <header className="ec-header-client">
@@ -18,6 +24,7 @@ const HeaderClient = () => {
 
                         {/*Só renderiza o componente admin icon se estiver logado como admin*/}
                         {
+                            globalContextTokenPayload &&
                             authenticationService.userHasAnyRoles(['ROLE_ADMIN']) &&
                             <Link to="/admin">
                                 <div className="ec-menu-item">
