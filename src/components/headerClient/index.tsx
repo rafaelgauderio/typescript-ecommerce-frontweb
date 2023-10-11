@@ -4,14 +4,15 @@ import CartIcon from '../CartIcon';
 import adminIcon from '../../assets/admin.svg';
 import * as authenticationService from '../../services/authentication-service';
 import { GlobalContextToken } from '../../utils/global-context-token';
-import {useContext} from 'react';
+import { useContext } from 'react';
+import LoggedInUser from '../LoggedInUser';
 
 
 const HeaderClient = () => {
 
     // component admin vai ficar observando o contexto global da API para ver se é renderizado
     // ou não de acordo com qual perfil do usuário logado
-    const {globalContextTokenPayload} = useContext(GlobalContextToken);
+    const { globalContextTokenPayload } = useContext(GlobalContextToken);
 
     return (
         <header className="ec-header-client">
@@ -38,9 +39,7 @@ const HeaderClient = () => {
                             </div>
                         </Link>
                     </div>
-                    <Link to="/login">
-                        Entrar
-                    </Link>
+                    <LoggedInUser></LoggedInUser>
                 </div>
             </nav>
         </header>

@@ -147,6 +147,11 @@ a:hover {
   font-size: 14px;
 }
 
+.ec-looged-user span {
+  cursor: pointer;
+  font-weight: 700;
+}
+
 .ec-menu-items-container {
   display: flex;
 }
