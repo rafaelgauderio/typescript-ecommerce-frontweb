@@ -5,7 +5,7 @@ import * as authenticationService from '../services/authentication-service';
 import {history} from "./browser-history";
 
 
-export function requestBackend(configuration: AxiosRequestConfig) {
+export function requestBackend(configuration: AxiosRequestConfig)  {
 
     let authorizationHeaders = configuration.headers;
 

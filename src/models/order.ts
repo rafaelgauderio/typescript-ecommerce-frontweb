@@ -17,9 +17,9 @@ export class OrderDTO {
 
     get totalKart(): number {
         let sum = 0;
-        this.items.map((item) => {
+        this.items.forEach((item) => {
             sum += item.subTotalItem;
-        })
+        });
         return sum;
     }
 }

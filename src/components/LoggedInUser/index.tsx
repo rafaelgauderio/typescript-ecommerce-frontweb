@@ -19,7 +19,7 @@ const LoggedInUser = () => {
             ? (
                 <div className="ec-looged-user">
                     <p>{globalContextTokenPayload.user_name}</p>
-                    <span onClick={handleLogoutOnClick}>Sair</span>
+                    <span onClick={handleLogoutOnClick}>SAIR</span>
                 </div>
             )
             : (
