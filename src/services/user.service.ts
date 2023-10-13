@@ -1,8 +1,8 @@
 import { requestBackend } from "../utils/request";
-import { AxiosRequestConfig } from "axios";
+import { AxiosPromise, AxiosRequestConfig} from "axios";
 
 
-export function findUser() {
+export function findUser() : AxiosPromise {
 
     const configuration: AxiosRequestConfig = {
         url: "/users/me",

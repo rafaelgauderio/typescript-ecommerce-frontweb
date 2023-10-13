@@ -15,6 +15,8 @@ import { AccessTokenPayloadDTO } from "./models/authentication";
 import { GlobalContextToken } from "./utils/global-context-token";
 import * as authenticationService from './services/authentication-service';
 import * as cartService from './services/cart-service';
+import Order from "./routes/ClientHome/Order";
+
 function App() {
 
   const [globalContextCartNumber, setGlobalContextCartNumber] = useState<number>(0);
@@ -46,6 +48,7 @@ function App() {
               <Route path="product-details/:productId" element={<ProductDetails />}></Route>
               <Route path="cart" element={<Cart />}></Route>
               <Route path="login" element={<Login />}></Route>
+              <Route path="order/:orderId" element={<PrivateRoute><Order></Order></PrivateRoute>}></Route>
             </Route >
 
             <Route path="/admin/" element={
