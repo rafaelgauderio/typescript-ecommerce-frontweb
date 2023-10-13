@@ -1,11 +1,11 @@
 // arquivo para auxiliar fazer requisicoes ao backend
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosPromise, AxiosRequestConfig } from "axios";
 import { BASE_URL } from "./system";
 import * as authenticationService from '../services/authentication-service';
 import {history} from "./browser-history";
 
 
-export function requestBackend(configuration: AxiosRequestConfig)  {
+export function requestBackend(configuration: AxiosRequestConfig) : AxiosPromise {
 
     let authorizationHeaders = configuration.headers;
 

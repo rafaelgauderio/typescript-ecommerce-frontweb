@@ -11,7 +11,7 @@ export function getCart() : OrderDTO {
     return cartLocalStorage.get();
 }
 
-export function addProductToCart (product : ProductDTO) {
+export function addProductToCart (product : ProductDTO) : void{
     const cart = cartLocalStorage.get();
     const item = cart.items.find(itemDoProduto => itemDoProduto.productId ===product.id);
     // se o item já estiver no carrinho não adiciona ele novamente
@@ -22,11 +22,11 @@ export function addProductToCart (product : ProductDTO) {
     }
 }
 
-export function cleanCart () {
+export function cleanCart () : void {
     cartLocalStorage.clearLocalStorage();
 }
 
-export function increaseItemCart (productId : number) {
+export function increaseItemCart (productId : number) : void {
     const cart = getCart();
     const itemCart = cart.items.find ( item => item.productId ===productId);
     if(itemCart !==undefined) {
@@ -35,7 +35,7 @@ export function increaseItemCart (productId : number) {
     }
 }
 
-export function decreaseItemCart (productId: number) {
+export function decreaseItemCart (productId: number): void {
     const cart = getCart();
     const itemCart = cart.items.find(item => item.productId ===productId);
     if(itemCart !==undefined) {
