@@ -1,3 +1,18 @@
+export class OrderDTO {
+    id?: number;
+    items: OrderItemDTO[] = [];
+
+    get total(): number {
+        let sum = 0;
+        this.items.forEach((item) => {
+            sum += item.subTotal;
+        });
+        return sum;
+    }
+}
+
+
+
 export class OrderItemDTO {
     constructor(
         public productId: number,
@@ -5,22 +20,10 @@ export class OrderItemDTO {
         public price: number,
         public name: string,
         public imgUrl: string
-    ) { }
-    get subTotalItem(): number {
+    ) {}
+    get subTotal(): number {
         return (this.quantity * this.price);
     }
 }
 
-export class OrderDTO {
-    id?: number;
-    items: OrderItemDTO[] = [];
-
-    get totalKart(): number {
-        let sum = 0;
-        this.items.forEach((item) => {
-            sum += item.subTotalItem;
-        });
-        return sum;
-    }
-}
 

@@ -116,7 +116,7 @@ export default function Kart() {
                                             </div>
                                         </div>
                                         <div className="ec-cart-item-right">
-                                            R$ {item.subTotalItem.toFixed(2)}
+                                            R$ {item.subTotal.toFixed(2)}
                                         </div>
                                     </div>
                                 ))
@@ -124,7 +124,7 @@ export default function Kart() {
 
 
                             <div className="ec-cart-total-container">
-                                <h3>R$ {cart.totalKart.toFixed(2)}</h3>
+                                <h3>R$ {cart.total.toFixed(2)}</h3>
                             </div>
                         </div>
                     )

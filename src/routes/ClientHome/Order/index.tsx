@@ -13,7 +13,7 @@ export default function Order() {
 
     useEffect(() => {
         orderService.findOrderByIdRequest(Number(params.orderId))
-            .then((response) => {
+            .then(response => {
                 setOrder(response.data);
             })
     }, []);  
@@ -45,7 +45,7 @@ export default function Order() {
                     }
 
                     <div className="ec-cart-total-container">
-                        <h3>R$ {order?.totalKart}</h3>
+                        <h3>R$ {order?.total.toFixed(2)}</h3>
                     </div>
                 </div>
 
