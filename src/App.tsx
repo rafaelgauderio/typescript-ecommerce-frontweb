@@ -48,7 +48,7 @@ function App() {
               <Route path="product-details/:productId" element={<ProductDetails />}></Route>
               <Route path="cart" element={<Cart />}></Route>
               <Route path="login" element={<Login />}></Route>
-              <Route path="order/:orderId" element={<Order></Order>}></Route>
+              <Route path="order/:orderId" element={<PrivateRoute><Order></Order></PrivateRoute>}></Route>
             </Route >
 
             <Route path="/admin/" element={

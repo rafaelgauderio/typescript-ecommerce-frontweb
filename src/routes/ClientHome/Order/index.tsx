@@ -38,7 +38,7 @@ export default function Order() {
                                     </div>
                                 </div>
                                 <div className="ec-cart-item-right">
-                                    R$ {(item.quantity * item.price).toFixed(2)}
+                                    R$ {(item.subTotal).toFixed(2)}
                                 </div>
                             </div>
                         ))

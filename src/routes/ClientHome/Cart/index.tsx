@@ -5,9 +5,10 @@ import ButtonWhite from '../../../components/ButtonWhite';
 import * as cartService from '../../../services/cart-service';
 import { OrderDTO } from '../../../models/order';
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ButtonClean from '../../../components/ButtonClean';
 import { ContextCartNumber } from '../../../utils/global-context-cart';
+import * as orderService from '../../../services/order-service';
 
 /*
 const item1: OrderItemDTO = new OrderItemDTO(
@@ -66,27 +67,38 @@ export default function Kart() {
     // iniciar o useState com o valor que estiver no localStorage
     const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
 
-    const {setGlobalContextCartNumber} = useContext(ContextCartNumber);
+    const { setGlobalContextCartNumber } = useContext(ContextCartNumber);
 
-    function handleClearCart () {
+    const navigate = useNavigate();
+
+    function handleClearCart() {
         // limpa o local storage
         cartService.cleanCart();
         // renderiza a tela novamente com o carrinho atualizado
-        setCart(cartService.getCart());   
+        setCart(cartService.getCart());
         // atualiza a quantidade de itens do carrinho para zero ao limpar todos os itens
-        setGlobalContextCartNumber(cartService.getCart().items.length);     
+        setGlobalContextCartNumber(cartService.getCart().items.length);
     }
 
-    const handleIncreaseProduct =  (productId : number) => {
-        cartService.increaseItemCart(productId);        
+    const handleIncreaseProduct = (productId: number) => {
+        cartService.increaseItemCart(productId);
         setCart(cartService.getCart());
     }
 
-    const handleDecreaseProduct = (productId : number) => {
-        cartService.decreaseItemCart(productId);        
+    const handleDecreaseProduct = (productId: number) => {
+        cartService.decreaseItemCart(productId);
         setCart(cartService.getCart);
         // atualizando o número de itens do carinho quando remover um item do carinho
         setGlobalContextCartNumber(cartService.getCart().items.length);
+    }
+
+    const handleConfirmOrderOnClick = () => {
+        orderService.registerOrderRequest(cart)
+            .then(requestResponse => {
+                cartService.cleanCart();
+                setGlobalContextCartNumber(0); // zera os itens de carrinho após confirmar o pedido
+                navigate(`/order/${requestResponse.data.id}`);
+            })
     }
 
     return (
@@ -111,7 +123,7 @@ export default function Kart() {
                                                 <div className="ec-cart-item-quantity-container">
                                                     <div className="ec-cart-item-quantity-btn" onClick={() => handleDecreaseProduct(item.productId)}>-</div>
                                                     <p>{item.quantity}</p>
-                                                    <div className="ec-cart-item-quantity-btn" onClick={ () => handleIncreaseProduct(item.productId)}>+</div>
+                                                    <div className="ec-cart-item-quantity-btn" onClick={() => handleIncreaseProduct(item.productId)}>+</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -130,15 +142,17 @@ export default function Kart() {
                     )
                 }
                 <div className="ec-btn-container">
-                    <ButtonBlue message={"Finalizar Pedido"}>
-                    </ButtonBlue>
+                    <div onClick={handleConfirmOrderOnClick}>
+                        <ButtonBlue message={"Finalizar Pedido"}>
+                        </ButtonBlue>
+                    </div>
                     <Link to="/product-catalog">
                         <ButtonWhite message={"Continuar Comprando"}>
                         </ButtonWhite>
                     </Link>
                     <div onClick={handleClearCart}>
-                    <ButtonClean className="bg-danger text-white" message={"Limpar Carrinho"}>
-                    </ButtonClean>
+                        <ButtonClean className="bg-danger text-white" message={"Limpar Carrinho"}>
+                        </ButtonClean>
                     </div>
                 </div>
             </section>
