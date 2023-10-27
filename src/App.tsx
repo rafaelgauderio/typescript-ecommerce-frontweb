@@ -16,6 +16,7 @@ import { GlobalContextToken } from "./utils/global-context-token";
 import * as authenticationService from './services/authentication-service';
 import * as cartService from './services/cart-service';
 import Order from "./routes/ClientHome/Order";
+import ProductListing from "./routes/Admin/ProductListing";
 
 function App() {
 
@@ -58,6 +59,7 @@ function App() {
                 <Admin />
               </PrivateRoute>}>
               <Route index element={<AdminHome></AdminHome>}></Route>
+              <Route path="products" element={<ProductListing></ProductListing>}></Route>
             </Route>
             {/*elemento navite para redirecionar*/}
             <Route path="*" element={<Navigate to="/" />}> </Route>
