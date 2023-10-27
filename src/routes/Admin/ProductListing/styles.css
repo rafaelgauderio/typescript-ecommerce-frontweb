@@ -1,0 +1,16 @@
+#product-listing-section {
+  padding: 20px 0;
+}
+
+.ec-product-listing-image {
+  display: block;
+  width: 70px;
+  height: 70px;
+}
+
+.ec-product-list-btn {
+  width: auto;
+  height: 20px;
+  cursor: pointer;
+  margin: 6px;
+}

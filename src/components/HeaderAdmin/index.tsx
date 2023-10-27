@@ -10,7 +10,9 @@ const HeaderAdmin = () => {
     return (
         <header className="ec-header-admin-panel">
             <nav className="ec-container">
-                <h1>Painel do Administrador</h1>
+                <NavLink to={"/"}>
+                    <h1>Eletronics Ecommerce</h1>
+                </NavLink>
                 <div className="ec-navbar-header-right">
                     <div className="ec-menu-items-container">
                         <NavLink
