@@ -17,6 +17,7 @@ import * as authenticationService from './services/authentication-service';
 import * as cartService from './services/cart-service';
 import Order from "./routes/ClientHome/Order";
 import ProductListing from "./routes/Admin/ProductListing";
+import ProductForm from "./routes/Admin/ProductForm";
 
 function App() {
 
@@ -60,6 +61,7 @@ function App() {
               </PrivateRoute>}>
               <Route index element={<AdminHome></AdminHome>}></Route>
               <Route path="products" element={<ProductListing></ProductListing>}></Route>
+              <Route path="products/:productId" element={<ProductForm></ProductForm>} ></Route>
             </Route>
             {/*elemento navite para redirecionar*/}
             <Route path="*" element={<Navigate to="/" />}> </Route>
