@@ -59,7 +59,9 @@ function App() {
               <PrivateRoute arrayRoles={['ROLE_ADMIN']}>
                 <Admin />
               </PrivateRoute>}>
-              <Route index element={<AdminHome></AdminHome>}></Route>
+              {/* element nagivate é o elemento de redirecionamento do react router dom */}
+              <Route index element={<Navigate to="/admin/home"></Navigate>}></Route>
+              <Route path="home" element={<AdminHome></AdminHome>}></Route>
               <Route path="products" element={<ProductListing></ProductListing>}></Route>
               <Route path="products/:productId" element={<ProductForm></ProductForm>} ></Route>
             </Route>
