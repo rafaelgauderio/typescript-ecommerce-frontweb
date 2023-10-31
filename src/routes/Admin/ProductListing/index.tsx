@@ -34,8 +34,14 @@ const ProductListing = () => {
                 setIsLastPage(requestPromiseResponse.data.last);
             });
 
-    }, [queryParameters])
+    }, [queryParameters]);
 
+    const handleNextPageOnClick = () => {
+        setQueryparameters({
+            ...queryParameters,
+            page: queryParameters.page + 1
+        });
+    }
 
     const handleSearchBar = (searchBarText: string) => {
         setProducts([]); // zerar a buscar
@@ -84,8 +90,12 @@ const ProductListing = () => {
                     </tbody>
                 </table>
 
-                <div><ButtonShowMore>
-                </ButtonShowMore></div>
+                {
+                    isLastPage === false &&
+                    <div onClick={handleNextPageOnClick}>
+                        <ButtonShowMore />
+                    </div>
+                }
             </section>
         </main>
     );
