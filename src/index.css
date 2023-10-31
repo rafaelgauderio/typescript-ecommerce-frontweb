@@ -126,7 +126,7 @@ a:hover {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-right: 20px;  
+  margin-right: 20px;
 }
 
 .ec-menu-item p {
@@ -234,6 +234,24 @@ a:hover {
 
 .ec-input-error {
   border: 1px solid var(--color-danger);
+}
+
+.ec-select:invalid {
+  color: var(--color-font-placeholder);
+}
+
+.ec-select option[disabled] {
+  display: none;
+}
+
+.ec-select option {
+  color: var(--color-font-primary);
+}
+
+.ec-textarea {
+  resize: none;
+  height: 130px;
+  padding-top: 10px;
 }
 
 /*form styles */
