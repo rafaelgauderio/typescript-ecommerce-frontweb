@@ -6,6 +6,7 @@ import ButtonWhite from '../../../components/ButtonWhite';
 import { useEffect, useState } from 'react';
 import { ProductDTO } from '../../../models/product';
 import * as productService from '../../../services/product-services';
+import SearchBar from '../../../components/SearchBar';
 
 type QueryParameters = {
     page: number;
@@ -36,6 +37,15 @@ const ProductListing = () => {
     }, [queryParameters])
 
 
+    const handleSearchBar = (searchBarText: string) => {
+        setProducts([]); // zerar a buscar
+        setQueryparameters({
+            ...queryParameters,
+            page: 0,
+            name: searchBarText
+        })
+    }
+
     return (
         <main>
             <section id="product-listing-section" className="ec-container">
@@ -45,11 +55,7 @@ const ProductListing = () => {
                     <ButtonWhite message="Inserir Novo"></ButtonWhite>
                 </div>
 
-                <form className="ec-search-bar">
-                    <button type="submit">🔎︎</button>
-                    <input type="text" placeholder="Nome do produto" />
-                    <button type="reset">🗙</button>
-                </form>
+                <SearchBar eventOnSearch={handleSearchBar}></SearchBar>
 
                 <table className="ec-table ec-margin-bottom-20px ec-margin-top-20px">
                     <thead>
@@ -65,7 +71,7 @@ const ProductListing = () => {
                     <tbody>
                         {
                             products.map((produto) => (
-                                <tr>
+                                <tr key={produto.id}>
                                     <td className="ec-table-bootstrap-576px">{produto.id}</td>
                                     <td><img className="ec-product-listing-image" src={produto.imgUrl} alt={produto.name} /> </td>
                                     <td className="ec-table-bootstrap-576px">R$ {produto.price.toFixed(2)}</td>
