@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { ProductDTO } from '../../../models/product';
 import * as productService from '../../../services/product-services';
 import SearchBar from '../../../components/SearchBar';
+import DialogInfoModal from '../../../components/DialogInfoModal';
 
 type QueryParameters = {
     page: number;
@@ -97,6 +98,7 @@ const ProductListing = () => {
                     </div>
                 }
             </section>
+            <DialogInfoModal></DialogInfoModal>
         </main>
     );
 
