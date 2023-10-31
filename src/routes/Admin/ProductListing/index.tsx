@@ -1,11 +1,40 @@
 import './styles.css';
-import tabletImage from "../../../assets/tablet.png";
 import editIcon from "../../../assets/edit.svg";
 import deleteIcon from "../../../assets/delete.svg";
 import ButtonShowMore from '../../../components/ButtonShowMore';
 import ButtonWhite from '../../../components/ButtonWhite';
+import { useEffect, useState } from 'react';
+import { ProductDTO } from '../../../models/product';
+import * as productService from '../../../services/product-services';
+
+type QueryParameters = {
+    page: number;
+    name: string;
+}
 
 const ProductListing = () => {
+
+    const [isLastPage, setIsLastPage] = useState(false);
+
+    const [products, setProducts] = useState<ProductDTO[]>([]);
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [queryParameters, setQueryparameters] = useState<QueryParameters>({
+        page: 0,
+        name: ""
+    });
+
+    useEffect(() => {
+
+        productService.findAllPageRequest(queryParameters.page, queryParameters.name)
+            .then((requestPromiseResponse) => {
+                const nextPage = requestPromiseResponse.data.content;
+                setProducts(products.concat(nextPage));
+                setIsLastPage(requestPromiseResponse.data.last);
+            });
+
+    }, [queryParameters])
+
 
     return (
         <main>
@@ -34,31 +63,18 @@ const ProductListing = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="ec-table-bootstrap-576px">1712</td>
-                            <td><img className="ec-product-listing-image" src={tabletImage} alt="Computer" /> </td>
-                            <td className="ec-table-bootstrap-576px">R$ 2400,00</td>
-                            <td className="ec-txt-left">Tablet Sansung</td>
-                            <td><img className="ec-product-listing-btn" src={editIcon} alt="Editar" /></td>
-                            <td><img className="ec-product-listing-btn" src={deleteIcon} alt="Deletar" /></td>
-                        </tr>
-                        <tr>
-                            <td className="ec-table-bootstrap-576px">1712</td>
-                            <td><img className="ec-product-listing-image" src={tabletImage} alt="Computer" /> </td>
-                            <td className="ec-table-bootstrap-576px">R$ 2400,00</td>
-                            <td className="ec-txt-left">Tablet Sansung</td>
-                            <td><img className="ec-product-listing-btn" src={editIcon} alt="Editar" /></td>
-                            <td><img className="ec-product-listing-btn" src={deleteIcon} alt="Deletar" /></td>
-                        </tr>
-                        <tr>
-                            <td className="ec-table-bootstrap-576px">1712</td>
-                            <td><img className="ec-product-listing-image" src={tabletImage} alt="Computer" /> </td>
-                            <td className="ec-table-bootstrap-576px">R$ 2400,00</td>
-                            <td className="ec-txt-left">Tablet Sansung</td>
-                            <td><img className="ec-product-listing-btn" src={editIcon} alt="Editar" /></td>
-                            <td><img className="ec-product-listing-btn" src={deleteIcon} alt="Deletar" /></td>
-                        </tr>
-
+                        {
+                            products.map((produto) => (
+                                <tr>
+                                    <td className="ec-table-bootstrap-576px">{produto.id}</td>
+                                    <td><img className="ec-product-listing-image" src={produto.imgUrl} alt={produto.name} /> </td>
+                                    <td className="ec-table-bootstrap-576px">R$ {produto.price.toFixed(2)}</td>
+                                    <td className="ec-txt-left">{produto.name}</td>
+                                    <td><img className="ec-product-listing-btn" src={editIcon} alt="Editar" /></td>
+                                    <td><img className="ec-product-listing-btn" src={deleteIcon} alt="Deletar" /></td>
+                                </tr>
+                            ))
+                        }
                     </tbody>
                 </table>
 
@@ -71,3 +87,4 @@ const ProductListing = () => {
 }
 
 export default ProductListing;
+
