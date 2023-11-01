@@ -28,7 +28,8 @@ const ProductListing = () => {
 
     const [dialogConfirmationModalData, setDialogConfirmationModalData] = useState({
         visiable: false,
-        message: "Confirma a exclusão do item"
+        message: "Tem certeza que deseja realizar essa operação de exclusão/edição",
+        id: 0
     });
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -69,16 +70,33 @@ const ProductListing = () => {
         setDialogInfoModalData({ ...dialogInfoModalData, visiable: false })
     }
 
-    const functionHandleDeleteClick = () => {
-        setDialogConfirmationModalData({ ...dialogConfirmationModalData, visiable: true })
+    const functionHandleDeleteClick = (productId: number) => {
+        setDialogConfirmationModalData({ ...dialogConfirmationModalData, visiable: true, id: productId })
     }
 
     const functionHandleEditClick = () => {
         setDialogInfoModalData({ ...dialogConfirmationModalData, visiable: true })
     }
 
-    const functionHandleDialogConfirmationAnswer = (arg: boolean) => {
-        console.log("Resposta da caixa de confirmação: " + arg);
+    const functionHandleDialogConfirmationAnswer = (arg1: boolean, productId: number) => {
+        //console.log("Resposta da caixa de confirmação: " + arg1);
+        if (arg1 === true) {
+            productService.deleteProductById(productId)
+                // após deletar o produto, renderizar a lista novamente
+                .then(() => {
+                    setProducts([]);
+                    setQueryparameters({
+                        ...queryParameters,
+                        page: 0
+                    });
+                })
+                .catch((erro) => {
+                    setDialogInfoModalData({
+                        visiable: true,
+                        message: erro.response.data.error + ". Não é possível excluir um produto já vinculado a algum um pedido!"
+                    })
+                })
+        }
         setDialogConfirmationModalData({ ...dialogConfirmationModalData, visiable: false }); // ocultar a janela após responder
     }
 
@@ -113,7 +131,7 @@ const ProductListing = () => {
                                     <td className="ec-table-bootstrap-576px">R$ {produto.price.toFixed(2)}</td>
                                     <td className="ec-txt-left">{produto.name}</td>
                                     <td><img className="ec-product-listing-btn" onClick={functionHandleEditClick} src={editIcon} alt="Editar" /></td>
-                                    <td><img className="ec-product-listing-btn" onClick={functionHandleDeleteClick} src={deleteIcon} alt="Deletar" /></td>
+                                    <td><img className="ec-product-listing-btn" onClick={() => functionHandleDeleteClick(produto.id)} src={deleteIcon} alt="Deletar" /></td>
                                 </tr>
                             ))
                         }
@@ -139,7 +157,8 @@ const ProductListing = () => {
                 dialogConfirmationModalData.visiable == true &&
                 <DialogConfirmationModal
                     message={dialogConfirmationModalData.message}
-                    onDialogAnswer={functionHandleDialogConfirmationAnswer} />
+                    onDialogAnswer={functionHandleDialogConfirmationAnswer}
+                    id={dialogConfirmationModalData.id} />
             }
 
         </main>

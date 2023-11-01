@@ -13,7 +13,7 @@ const DialogInfoModal = ({ message, onDialogClose }: Props) => {
         <div className="ec-dialog-background" onClick={onDialogClose}>
             <div className="ec-dialog-box" onClick={(evento) => evento.stopPropagation()} >
                 <h2>{message}</h2>
-                <div className="ec-dialog-btn-container" onClick={onDialogClose}>
+                <div className="ec-dialog-btn-modal-info" onClick={onDialogClose}>
                     <ButtonBlue message={"ok"}></ButtonBlue>
                 </div>
 

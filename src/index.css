@@ -334,6 +334,7 @@ a:hover {
   position: absolute;
   top: 50%;
   left: 50%;
+  min-height: 160px;
   transform: translate(-50%, -50%);
 }
 
@@ -343,10 +344,14 @@ a:hover {
 }
 
 .ec-dialog-btn-container {
-  width: 80%;  
+  width: 60%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 30px;
+}
+
+.ec-dialog-btn-modal-info {
+  width: 30%;   
 }
 
 /* dialog styles */
