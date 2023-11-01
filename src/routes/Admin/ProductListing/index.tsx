@@ -8,6 +8,7 @@ import { ProductDTO } from '../../../models/product';
 import * as productService from '../../../services/product-services';
 import SearchBar from '../../../components/SearchBar';
 import DialogInfoModal from '../../../components/DialogInfoModal';
+import DialogConfirmationModal from '../../../components/DialogConfirmationModal';
 
 type QueryParameters = {
     page: number;
@@ -19,6 +20,17 @@ const ProductListing = () => {
     const [isLastPage, setIsLastPage] = useState(false);
 
     const [products, setProducts] = useState<ProductDTO[]>([]);
+
+    const [dialogInfoModalData, setDialogInfoModalData] = useState({
+        visiable: false,
+        message: "Operação realizada com sucesso"
+    });
+
+    const [dialogConfirmationModalData, setDialogConfirmationModalData] = useState({
+        visiable: false,
+        message: "Tem certeza que deseja realizar essa operação de exclusão/edição",
+        id: 0
+    });
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [queryParameters, setQueryparameters] = useState<QueryParameters>({
@@ -53,6 +65,41 @@ const ProductListing = () => {
         })
     }
 
+    const functionHandleDialogInfoModalClose = () => {
+        // sumir com a caixa se a modal emitir o evento de fehcar o componente
+        setDialogInfoModalData({ ...dialogInfoModalData, visiable: false })
+    }
+
+    const functionHandleDeleteClick = (productId: number) => {
+        setDialogConfirmationModalData({ ...dialogConfirmationModalData, visiable: true, id: productId })
+    }
+
+    const functionHandleEditClick = () => {
+        setDialogInfoModalData({ ...dialogConfirmationModalData, visiable: true })
+    }
+
+    const functionHandleDialogConfirmationAnswer = (arg1: boolean, productId: number) => {
+        //console.log("Resposta da caixa de confirmação: " + arg1);
+        if (arg1 === true) {
+            productService.deleteProductById(productId)
+                // após deletar o produto, renderizar a lista novamente
+                .then(() => {
+                    setProducts([]);
+                    setQueryparameters({
+                        ...queryParameters,
+                        page: 0
+                    });
+                })
+                .catch((erro) => {
+                    setDialogInfoModalData({
+                        visiable: true,
+                        message: erro.response.data.error + ". Não é possível excluir um produto já vinculado a algum um pedido!"
+                    })
+                })
+        }
+        setDialogConfirmationModalData({ ...dialogConfirmationModalData, visiable: false }); // ocultar a janela após responder
+    }
+
     return (
         <main>
             <section id="product-listing-section" className="ec-container">
@@ -83,8 +130,8 @@ const ProductListing = () => {
                                     <td><img className="ec-product-listing-image" src={produto.imgUrl} alt={produto.name} /> </td>
                                     <td className="ec-table-bootstrap-576px">R$ {produto.price.toFixed(2)}</td>
                                     <td className="ec-txt-left">{produto.name}</td>
-                                    <td><img className="ec-product-listing-btn" src={editIcon} alt="Editar" /></td>
-                                    <td><img className="ec-product-listing-btn" src={deleteIcon} alt="Deletar" /></td>
+                                    <td><img className="ec-product-listing-btn" onClick={functionHandleEditClick} src={editIcon} alt="Editar" /></td>
+                                    <td><img className="ec-product-listing-btn" onClick={() => functionHandleDeleteClick(produto.id)} src={deleteIcon} alt="Deletar" /></td>
                                 </tr>
                             ))
                         }
@@ -98,7 +145,22 @@ const ProductListing = () => {
                     </div>
                 }
             </section>
-            <DialogInfoModal></DialogInfoModal>
+            {
+                dialogInfoModalData.visiable == true &&
+                <DialogInfoModal
+                    message={dialogInfoModalData.message}
+                    onDialogClose={functionHandleDialogInfoModalClose} />
+
+            }
+
+            {
+                dialogConfirmationModalData.visiable == true &&
+                <DialogConfirmationModal
+                    message={dialogConfirmationModalData.message}
+                    onDialogAnswer={functionHandleDialogConfirmationAnswer}
+                    id={dialogConfirmationModalData.id} />
+            }
+
         </main>
     );
 
