@@ -343,7 +343,10 @@ a:hover {
 }
 
 .ec-dialog-btn-container {
-  width: 50%; 
+  width: 80%;  
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 30px;
 }
 
 /* dialog styles */

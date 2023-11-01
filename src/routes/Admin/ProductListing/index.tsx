@@ -8,6 +8,7 @@ import { ProductDTO } from '../../../models/product';
 import * as productService from '../../../services/product-services';
 import SearchBar from '../../../components/SearchBar';
 import DialogInfoModal from '../../../components/DialogInfoModal';
+import DialogConfirmationModal from '../../../components/DialogConfirmationModal';
 
 type QueryParameters = {
     page: number;
@@ -23,6 +24,11 @@ const ProductListing = () => {
     const [dialogInfoModalData, setDialogInfoModalData] = useState({
         visiable: false,
         message: "Operação realizada com sucesso"
+    });
+
+    const [dialogConfirmationModalData, setDialogConfirmationModalData] = useState({
+        visiable: false,
+        message: "Confirma a exclusão do item"
     });
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -64,7 +70,16 @@ const ProductListing = () => {
     }
 
     const functionHandleDeleteClick = () => {
-        setDialogInfoModalData({ ...dialogInfoModalData, visiable: true })
+        setDialogConfirmationModalData({ ...dialogConfirmationModalData, visiable: true })
+    }
+
+    const functionHandleEditClick = () => {
+        setDialogInfoModalData({ ...dialogConfirmationModalData, visiable: true })
+    }
+
+    const functionHandleDialogConfirmationAnswer = (arg: boolean) => {
+        console.log("Resposta da caixa de confirmação: " + arg);
+        setDialogConfirmationModalData({ ...dialogConfirmationModalData, visiable: false }); // ocultar a janela após responder
     }
 
     return (
@@ -97,7 +112,7 @@ const ProductListing = () => {
                                     <td><img className="ec-product-listing-image" src={produto.imgUrl} alt={produto.name} /> </td>
                                     <td className="ec-table-bootstrap-576px">R$ {produto.price.toFixed(2)}</td>
                                     <td className="ec-txt-left">{produto.name}</td>
-                                    <td><img className="ec-product-listing-btn" src={editIcon} alt="Editar" /></td>
+                                    <td><img className="ec-product-listing-btn" onClick={functionHandleEditClick} src={editIcon} alt="Editar" /></td>
                                     <td><img className="ec-product-listing-btn" onClick={functionHandleDeleteClick} src={deleteIcon} alt="Deletar" /></td>
                                 </tr>
                             ))
@@ -114,10 +129,17 @@ const ProductListing = () => {
             </section>
             {
                 dialogInfoModalData.visiable == true &&
-                <DialogInfoModal message={dialogInfoModalData.message}
-                    onDialogClose={functionHandleDialogInfoModalClose}>
+                <DialogInfoModal
+                    message={dialogInfoModalData.message}
+                    onDialogClose={functionHandleDialogInfoModalClose} />
 
-                </DialogInfoModal>
+            }
+
+            {
+                dialogConfirmationModalData.visiable == true &&
+                <DialogConfirmationModal
+                    message={dialogConfirmationModalData.message}
+                    onDialogAnswer={functionHandleDialogConfirmationAnswer} />
             }
 
         </main>
