@@ -20,6 +20,11 @@ const ProductListing = () => {
 
     const [products, setProducts] = useState<ProductDTO[]>([]);
 
+    const [dialogInfoModalData, setDialogInfoModalData] = useState({
+        visiable: false,
+        message: "Operação realizada com sucesso"
+    });
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [queryParameters, setQueryparameters] = useState<QueryParameters>({
         page: 0,
@@ -53,6 +58,15 @@ const ProductListing = () => {
         })
     }
 
+    const functionHandleDialogInfoModalClose = () => {
+        // sumir com a caixa se a modal emitir o evento de fehcar o componente
+        setDialogInfoModalData({ ...dialogInfoModalData, visiable: false })
+    }
+
+    const functionHandleDeleteClick = () => {
+        setDialogInfoModalData({ ...dialogInfoModalData, visiable: true })
+    }
+
     return (
         <main>
             <section id="product-listing-section" className="ec-container">
@@ -84,7 +98,7 @@ const ProductListing = () => {
                                     <td className="ec-table-bootstrap-576px">R$ {produto.price.toFixed(2)}</td>
                                     <td className="ec-txt-left">{produto.name}</td>
                                     <td><img className="ec-product-listing-btn" src={editIcon} alt="Editar" /></td>
-                                    <td><img className="ec-product-listing-btn" src={deleteIcon} alt="Deletar" /></td>
+                                    <td><img className="ec-product-listing-btn" onClick={functionHandleDeleteClick} src={deleteIcon} alt="Deletar" /></td>
                                 </tr>
                             ))
                         }
@@ -98,7 +112,14 @@ const ProductListing = () => {
                     </div>
                 }
             </section>
-            <DialogInfoModal></DialogInfoModal>
+            {
+                dialogInfoModalData.visiable == true &&
+                <DialogInfoModal message={dialogInfoModalData.message}
+                    onDialogClose={functionHandleDialogInfoModalClose}>
+
+                </DialogInfoModal>
+            }
+
         </main>
     );
 
