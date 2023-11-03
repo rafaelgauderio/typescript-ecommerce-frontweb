@@ -4,6 +4,7 @@ import * as authenticationService from '../../../services/authentication-service
 import { useNavigate } from 'react-router-dom';
 import { GlobalContextToken } from '../../../utils/global-context-token';
 import { useContext } from 'react';
+import CustomFormInput from '../../../components/CustomFormInput';
 
 const Login = () => {
 
@@ -35,9 +36,10 @@ const Login = () => {
     const handleSubmitForm = (event: React.FormEvent<HTMLDivElement>) => {
         event.preventDefault();
         authenticationService.loginRequest(
-            { 
-                username: formData.username.value, 
-                password: formData.password.value })
+            {
+                username: formData.username.value,
+                password: formData.password.value
+            })
             .then(response => {
                 //salvar o token
                 authenticationService.saveAccessToken(response.data.access_token);
@@ -61,7 +63,7 @@ const Login = () => {
         const inputValue = event.target.value;
         setFormData({
             ...formData,
-            [inputName]: {...formData[inputName], value: inputValue }
+            [inputName]: { ...formData[inputName], value: inputValue }
         })
     }
 
@@ -74,23 +76,18 @@ const Login = () => {
                         <h2>Login</h2>
                         <div className="ec-form-inputs-container">
                             <div>
-                                <input
-                                    name="username"
-                                    value={formData.username.value}
+                                <CustomFormInput
+                                    {...formData.username}
                                     onChange={handleInputOnChange}
                                     className="ec-form-input"
-                                    type="text"
-                                    placeholder="Email" />
-
+                                />
                             </div>
                             <div>
-                                <input
-                                    name="password"
-                                    value={formData.password.value}
+                                <CustomFormInput
+                                    {...formData.password}
                                     onChange={handleInputOnChange}
                                     className="ec-form-input"
-                                    type="password"
-                                    placeholder="Senha" />
+                                />
                             </div>
                         </div>
 
