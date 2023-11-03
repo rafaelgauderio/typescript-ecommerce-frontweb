@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { GlobalContextToken } from '../../../utils/global-context-token';
 import { useContext } from 'react';
 import CustomFormInput from '../../../components/CustomFormInput';
+import * as inputForms from '../../../utils/forms';
 
 const Login = () => {
 
@@ -61,10 +62,7 @@ const Login = () => {
     const handleInputOnChange = (event: any) => {
         const inputName = event.target.name;
         const inputValue = event.target.value;
-        setFormData({
-            ...formData,
-            [inputName]: { ...formData[inputName], value: inputValue }
-        })
+        setFormData(inputForms.updateInputFields(formData, inputName, inputValue));
     }
 
     return (
