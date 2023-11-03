@@ -1,26 +1,43 @@
 import { useState } from 'react';
 import './styles.css';
-import { CredentialsDTO } from '../../../models/authentication';
 import * as authenticationService from '../../../services/authentication-service';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContextToken } from '../../../utils/global-context-token';
-import {useContext} from 'react';
+import { useContext } from 'react';
 
 const Login = () => {
 
-    const [formData, setFormData] = useState<CredentialsDTO>({
-        // valores iniciais
-        username: '',
-        password: ''
-    });
+    const [formData, setFormData] = useState<any>({
+        username: {
+            value: "",
+            id: "username",
+            name: "username",
+            type: "text",
+            placeholder: "Email",
+            validation: function (value: string) {
+                return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value.toLowerCase());
+            },
+            message: "Favor informar um email válido",
+        },
+        password: {
+            value: "",
+            id: "password",
+            name: "password",
+            type: "password",
+            placeholder: "Senha",
+        }
+    })
 
     const navigate = useNavigate();
 
-    const {setGlobalContextTokenPayload} = useContext(GlobalContextToken);
+    const { setGlobalContextTokenPayload } = useContext(GlobalContextToken);
 
     const handleSubmitForm = (event: React.FormEvent<HTMLDivElement>) => {
         event.preventDefault();
-        authenticationService.loginRequest(formData)
+        authenticationService.loginRequest(
+            { 
+                username: formData.username.value, 
+                password: formData.password.value })
             .then(response => {
                 //salvar o token
                 authenticationService.saveAccessToken(response.data.access_token);
@@ -44,7 +61,7 @@ const Login = () => {
         const inputValue = event.target.value;
         setFormData({
             ...formData,
-            [inputName]: inputValue
+            [inputName]: {...formData[inputName], value: inputValue }
         })
     }
 
@@ -59,7 +76,7 @@ const Login = () => {
                             <div>
                                 <input
                                     name="username"
-                                    value={formData.username}
+                                    value={formData.username.value}
                                     onChange={handleInputOnChange}
                                     className="ec-form-input"
                                     type="text"
@@ -69,7 +86,7 @@ const Login = () => {
                             <div>
                                 <input
                                     name="password"
-                                    value={formData.password}
+                                    value={formData.password.value}
                                     onChange={handleInputOnChange}
                                     className="ec-form-input"
                                     type="password"
