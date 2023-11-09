@@ -6,6 +6,7 @@ import { GlobalContextToken } from '../../../utils/global-context-token';
 import { useContext } from 'react';
 import CustomFormInput from '../../../components/CustomFormInput';
 import * as inputForms from '../../../utils/forms';
+import { getFormSubmissionInfo } from 'react-router-dom/dist/dom';
 
 const Login = () => {
 
@@ -36,11 +37,10 @@ const Login = () => {
 
     const handleSubmitForm = (event: React.FormEvent<HTMLDivElement>) => {
         event.preventDefault();
+        //console.log(inputForms.getFieldValueFromInputObject(formData));
         authenticationService.loginRequest(
-            {
-                username: formData.username.value,
-                password: formData.password.value
-            })
+            inputForms.getFieldValueFromInputObject(formData)
+        )
             .then(response => {
                 //salvar o token
                 authenticationService.saveAccessToken(response.data.access_token);
