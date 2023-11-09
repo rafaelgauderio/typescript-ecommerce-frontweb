@@ -1,6 +1,10 @@
+import { Link } from "react-router-dom";
 import "./styles.css";
 
+
 const ProductForm = () => {
+
+    const routeCancelInsertion: string = "/admin/products";
 
     return (
         <main>
@@ -18,6 +22,7 @@ const ProductForm = () => {
                             <div>
                                 <input className="ec-form-input" type="text" placeholder="Imagem"></input>
                             </div>
+                            {/*
                             <div>
                                 <select className="ec-form-input ec-select" required>
                                     <option value="" disabled selected>Categorias</option>
@@ -28,10 +33,13 @@ const ProductForm = () => {
                             <div>
                                 <textarea className="ec-form-input ec-textarea" placeholder="Descrição"></textarea>
                             </div>
+    */}
                         </div>
 
                         <div className="ec-product-form-buttons">
-                            <button type="reset" className="ec-btn ec-btn-cancel">Cancelar</button>
+                            <Link to={routeCancelInsertion}>
+                                <button type="reset" className="ec-btn ec-btn-cancel">Cancelar</button>
+                            </Link>
                             <button type="submit" className="ec-btn ec-btn-salvar">Salvar</button>
                         </div>
                     </form>
