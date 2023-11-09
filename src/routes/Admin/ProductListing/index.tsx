@@ -9,6 +9,7 @@ import * as productService from '../../../services/product-services';
 import SearchBar from '../../../components/SearchBar';
 import DialogInfoModal from '../../../components/DialogInfoModal';
 import DialogConfirmationModal from '../../../components/DialogConfirmationModal';
+import { useNavigate } from 'react-router-dom';
 
 type QueryParameters = {
     page: number;
@@ -38,6 +39,10 @@ const ProductListing = () => {
         name: ""
     });
 
+    const navigate = useNavigate();
+
+    const routeInsertNewProduct: string = "/admin/products/create";
+
     useEffect(() => {
 
         productService.findAllPageRequest(queryParameters.page, queryParameters.name)
@@ -63,6 +68,11 @@ const ProductListing = () => {
             page: 0,
             name: searchBarText
         })
+    }
+
+    const functionHandleInsertNewProduct = () => {
+        navigate(routeInsertNewProduct);
+
     }
 
     const functionHandleDialogInfoModalClose = () => {
@@ -106,7 +116,9 @@ const ProductListing = () => {
                 <h2 className="ec-section-title ec-margin-bottom-20px">Cadastro de produtos</h2>
 
                 <div className="ec-btn-container ec-margin-bottom-20px">
-                    <ButtonWhite message="Inserir Novo"></ButtonWhite>
+                    <div onClick={functionHandleInsertNewProduct}>
+                        <ButtonWhite message="Inserir Novo"></ButtonWhite>
+                    </div>
                 </div>
 
                 <SearchBar eventOnSearch={handleSearchBar}></SearchBar>
