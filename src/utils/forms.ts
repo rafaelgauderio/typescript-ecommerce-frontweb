@@ -18,3 +18,13 @@ export function getFieldValueFromInputObject(inputs: any) {
 
     return objectData;
 }
+// mantém os valores dos campos já preenchidos e atualizados os valores dos 
+// campos preenchidos com os newValues
+
+export function updateAllFields(inputs: any, newValues: any) {
+    const newInputs : any = {};
+    for(const attribute in inputs) {
+        newInputs[attribute] = {...inputs[attribute], value: newValues[attribute]};
+    }
+    return newInputs;
+}

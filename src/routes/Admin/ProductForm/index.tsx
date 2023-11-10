@@ -43,9 +43,13 @@ const ProductForm = () => {
         if (isEditing === true) {
             productService.findProductById(Number(parameters.productId))
                 .then((requestResponse) => {
-                    console.log(requestResponse.data);
-                    console.log(requestResponse.data.name);
-                    console.log(requestResponse.status);
+                    //console.log(requestResponse.data);
+                    //console.log(requestResponse.data.name);
+                    //console.log(requestResponse.status);
+                    //console.log(inputForms.updateAllFields(formData, requestResponse.data));
+                    // atualizando os com os valores dos campos do formulario que vieram da requisição do banco de dados                    
+                    const newFormDataFromDatabase = inputForms.updateAllFields(formData, requestResponse.data);
+                    setFormData(newFormDataFromDatabase);
                 })
         }
 
