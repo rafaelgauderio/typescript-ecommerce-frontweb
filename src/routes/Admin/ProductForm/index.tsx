@@ -1,10 +1,45 @@
 import { Link } from "react-router-dom";
 import "./styles.css";
+import { useState } from "react";
+import CustomFormInput from "../../../components/CustomFormInput";
+import * as inputForms from '../../../utils/forms';
 
 
 const ProductForm = () => {
 
     const routeCancelInsertion: string = "/admin/products";
+
+    const [formData, setFormData] = useState<any>({
+        name: {
+            value: "",
+            id: "name",
+            name: "name",
+            type: "text",
+            placeholder: "Nome",
+        },
+        price: {
+            value: "",
+            id: "price",
+            name: "price",
+            type: "number",
+            placehodler: "Preço",
+        },
+        imgUrl: {
+            value: "",
+            id: "imgUrl",
+            name: "imgUrl",
+            type: "text",
+            placeholder: "Imagem do Produto"
+        },
+    });
+
+    const handleInputOnChange = (event: any) => {
+        const inputName = event.target.name;
+        const inputValue = event.target.value;
+        setFormData(inputForms.updateInputFields(
+            formData, inputName, inputValue
+        ))
+    };
 
     return (
         <main>
@@ -14,13 +49,26 @@ const ProductForm = () => {
                         <h2>Dados do produto</h2>
                         <div className="ec-form-inputs-container">
                             <div>
-                                <input className="ec-form-input" type="text" placeholder="Nome"></input>
+                                <CustomFormInput
+                                    {...formData.name}
+                                    onChange={handleInputOnChange}
+                                    className="ec-form-input"
+                                />
                             </div>
                             <div>
-                                <input className="ec-form-input" type="text" placeholder="Preço"></input>
+                                <CustomFormInput
+                                    {...formData.price}
+                                    onChange={handleInputOnChange}
+                                    className="ec-form-input"
+
+                                />
                             </div>
                             <div>
-                                <input className="ec-form-input" type="text" placeholder="Imagem"></input>
+                                <CustomFormInput
+                                    {...formData.imgUrl}
+                                    onChange={handleInputOnChange}
+                                    className="ec-form-input"
+                                />
                             </div>
                             {/*
                             <div>
@@ -32,8 +80,7 @@ const ProductForm = () => {
                             </div>
                             <div>
                                 <textarea className="ec-form-input ec-textarea" placeholder="Descrição"></textarea>
-                            </div>
-    */}
+                            </div> */}
                         </div>
 
                         <div className="ec-product-form-buttons">
