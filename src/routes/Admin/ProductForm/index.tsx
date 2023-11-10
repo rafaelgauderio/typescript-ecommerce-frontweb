@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./styles.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomFormInput from "../../../components/CustomFormInput";
 import * as inputForms from '../../../utils/forms';
+import * as productService from '../../../services/product-services';
 
 
 const ProductForm = () => {
@@ -32,6 +33,23 @@ const ProductForm = () => {
             placeholder: "Imagem do Produto"
         },
     });
+
+    const parameters = useParams();
+
+    const isEditing = parameters.productId !== 'create';
+
+    useEffect(() => {
+        // se estiver editando tem que buscar do banco de dados
+        if (isEditing === true) {
+            productService.findProductById(Number(parameters.productId))
+                .then((requestResponse) => {
+                    console.log(requestResponse.data);
+                    console.log(requestResponse.data.name);
+                    console.log(requestResponse.status);
+                })
+        }
+
+    }, []);
 
     const handleInputOnChange = (event: any) => {
         const inputName = event.target.name;
