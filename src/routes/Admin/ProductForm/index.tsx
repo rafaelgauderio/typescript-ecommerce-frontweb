@@ -73,7 +73,7 @@ const ProductForm = () => {
         // atualizando os dados
         const updateData = inputForms.updateInputFields(formData, inputName, inputValue);
         // validando os dados atualizados
-        const validateData = inputForms.validateFields(updateData,inputName);
+        const validateData = inputForms.validateFields(updateData, inputName);
         // setando os dados validos e atualizados
         setFormData(validateData);
     };
@@ -91,7 +91,9 @@ const ProductForm = () => {
                                     onChange={handleInputOnChange}
                                     className="ec-form-input"
                                 />
+                                <div className="ec-form-error">{formData.name.message}</div>
                             </div>
+
                             <div>
                                 <CustomFormInput
                                     {...formData.price}
@@ -99,7 +101,9 @@ const ProductForm = () => {
                                     className="ec-form-input"
 
                                 />
+                                <div className="ec-form-error">{formData.price.message}</div>
                             </div>
+
                             <div>
                                 <CustomFormInput
                                     {...formData.imgUrl}
