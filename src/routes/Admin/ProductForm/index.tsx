@@ -24,6 +24,10 @@ const ProductForm = () => {
             name: "price",
             type: "number",
             placehodler: "Preço",
+            validation: function (priceValue: any) {
+                return Number(priceValue) > 0
+            },
+            message: "Informar um valor positivo para preço do produto"
         },
         imgUrl: {
             value: "",
@@ -39,6 +43,12 @@ const ProductForm = () => {
     const isEditing = parameters.productId !== 'create';
 
     useEffect(() => {
+
+        const objeto = inputForms.validateFields(formData, "price");  
+        const objeto2 = inputForms.validateFields(formData, "name");       
+        console.log(objeto);
+        console.log(objeto2);
+
         // se estiver editando tem que buscar do banco de dados
         if (isEditing === true) {
             productService.findProductById(Number(parameters.productId))
@@ -56,6 +66,7 @@ const ProductForm = () => {
     }, []);
 
     const handleInputOnChange = (event: any) => {
+
         const inputName = event.target.name;
         const inputValue = event.target.value;
         setFormData(inputForms.updateInputFields(
