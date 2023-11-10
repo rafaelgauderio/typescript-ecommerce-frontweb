@@ -1,10 +1,82 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./styles.css";
+import { useEffect, useState } from "react";
+import CustomFormInput from "../../../components/CustomFormInput";
+import * as inputForms from '../../../utils/forms';
+import * as productService from '../../../services/product-services';
 
 
 const ProductForm = () => {
 
     const routeCancelInsertion: string = "/admin/products";
+
+    const [formData, setFormData] = useState<any>({
+        name: {
+            value: "",
+            id: "name",
+            name: "name",
+            type: "text",
+            placeholder: "Nome",
+        },
+        price: {
+            value: "",
+            id: "price",
+            name: "price",
+            type: "number",
+            placehodler: "Preço",
+            validation: function (priceValue: any) {
+                return Number(priceValue) > 0
+            },
+            message: "Informar um valor positivo para preço do produto"
+        },
+        imgUrl: {
+            value: "",
+            id: "imgUrl",
+            name: "imgUrl",
+            type: "text",
+            placeholder: "Imagem do Produto"
+        },
+    });
+
+    const parameters = useParams();
+
+    const isEditing = parameters.productId !== 'create';
+
+    useEffect(() => {
+
+        /*
+        const objeto = inputForms.validateFields(formData, "price");  
+        const objeto2 = inputForms.validateFields(formData, "name");       
+        console.log(objeto);
+        console.log(objeto2);
+        */
+        // se estiver editando tem que buscar do banco de dados
+        if (isEditing === true) {
+            productService.findProductById(Number(parameters.productId))
+                .then((requestResponse) => {
+                    //console.log(requestResponse.data);
+                    //console.log(requestResponse.data.name);
+                    //console.log(requestResponse.status);
+                    //console.log(inputForms.updateAllFields(formData, requestResponse.data));
+                    // atualizando os com os valores dos campos do formulario que vieram da requisição do banco de dados                    
+                    const newFormDataFromDatabase = inputForms.updateAllFields(formData, requestResponse.data);
+                    setFormData(newFormDataFromDatabase);
+                })
+        }
+
+    }, []);
+
+    const handleInputOnChange = (event: any) => {
+
+        const inputName = event.target.name;
+        const inputValue = event.target.value;
+        // atualizando os dados
+        const updateData = inputForms.updateInputFields(formData, inputName, inputValue);
+        // validando os dados atualizados
+        const validateData = inputForms.validateFields(updateData, inputName);
+        // setando os dados validos e atualizados
+        setFormData(validateData);
+    };
 
     return (
         <main>
@@ -14,13 +86,30 @@ const ProductForm = () => {
                         <h2>Dados do produto</h2>
                         <div className="ec-form-inputs-container">
                             <div>
-                                <input className="ec-form-input" type="text" placeholder="Nome"></input>
+                                <CustomFormInput
+                                    {...formData.name}
+                                    onChange={handleInputOnChange}
+                                    className="ec-form-input"
+                                />
+                                <div className="ec-form-error">{formData.name.message}</div>
                             </div>
+
                             <div>
-                                <input className="ec-form-input" type="text" placeholder="Preço"></input>
+                                <CustomFormInput
+                                    {...formData.price}
+                                    onChange={handleInputOnChange}
+                                    className="ec-form-input"
+
+                                />
+                                <div className="ec-form-error">{formData.price.message}</div>
                             </div>
+
                             <div>
-                                <input className="ec-form-input" type="text" placeholder="Imagem"></input>
+                                <CustomFormInput
+                                    {...formData.imgUrl}
+                                    onChange={handleInputOnChange}
+                                    className="ec-form-input"
+                                />
                             </div>
                             {/*
                             <div>
@@ -32,8 +121,7 @@ const ProductForm = () => {
                             </div>
                             <div>
                                 <textarea className="ec-form-input ec-textarea" placeholder="Descrição"></textarea>
-                            </div>
-    */}
+                            </div> */}
                         </div>
 
                         <div className="ec-product-form-buttons">

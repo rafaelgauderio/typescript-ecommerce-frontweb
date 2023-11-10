@@ -6,7 +6,6 @@ import { GlobalContextToken } from '../../../utils/global-context-token';
 import { useContext } from 'react';
 import CustomFormInput from '../../../components/CustomFormInput';
 import * as inputForms from '../../../utils/forms';
-import { getFormSubmissionInfo } from 'react-router-dom/dist/dom';
 
 const Login = () => {
 
