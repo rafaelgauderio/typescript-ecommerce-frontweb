@@ -44,11 +44,12 @@ const ProductForm = () => {
 
     useEffect(() => {
 
+        /*
         const objeto = inputForms.validateFields(formData, "price");  
         const objeto2 = inputForms.validateFields(formData, "name");       
         console.log(objeto);
         console.log(objeto2);
-
+        */
         // se estiver editando tem que buscar do banco de dados
         if (isEditing === true) {
             productService.findProductById(Number(parameters.productId))
@@ -69,9 +70,12 @@ const ProductForm = () => {
 
         const inputName = event.target.name;
         const inputValue = event.target.value;
-        setFormData(inputForms.updateInputFields(
-            formData, inputName, inputValue
-        ))
+        // atualizando os dados
+        const updateData = inputForms.updateInputFields(formData, inputName, inputValue);
+        // validando os dados atualizados
+        const validateData = inputForms.validateFields(updateData,inputName);
+        // setando os dados validos e atualizados
+        setFormData(validateData);
     };
 
     return (
