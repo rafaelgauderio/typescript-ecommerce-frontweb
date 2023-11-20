@@ -29,9 +29,10 @@ const Login = () => {
             type: "password",
             placeholder: "Senha",
             validation: function (value: string) {
-                return value.length >= 6;
+                //return value.length >= 6;
+                return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
             },
-            message: "Mínimo de 6 dígitos para o campo senha"
+            message: "Campo senha com mínimo de 8 caractes, pelo um caracter maiúsculo, um minúsculo e um alfa numérico",
         }
     })
 
