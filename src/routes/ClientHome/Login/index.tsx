@@ -9,6 +9,7 @@ import * as inputForms from '../../../utils/forms';
 
 const Login = () => {
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [formData, setFormData] = useState<any>({
         username: {
             value: "",
@@ -60,10 +61,15 @@ const Login = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleInputOnChange = (event: any) => {
         const inputName = event.target.name;
-        const inputValue = event.target.value;
-        setFormData(inputForms.updateInputFields(formData, inputName, inputValue));
-    }
+        const inputValue = event.target.value;      
+        const updatedAndValidatedData = inputForms.updateAndValidateFields(formData, inputName, inputValue);
+        setFormData(updatedAndValidatedData);
+    };
 
+    const handleInputBecameDirty = (name: string) => {
+        const newFormData = inputForms.addFieldDirtyAndValidatedData(formData, name);
+        setFormData(newFormData);
+    };
     return (
 
         <main>
@@ -76,6 +82,7 @@ const Login = () => {
                                 <CustomFormInput
                                     {...formData.username}
                                     onChange={handleInputOnChange}
+                                    onBecameDirty={handleInputBecameDirty}  
                                     className="ec-form-input"
                                 />
                             </div>
@@ -83,6 +90,7 @@ const Login = () => {
                                 <CustomFormInput
                                     {...formData.password}
                                     onChange={handleInputOnChange}
+                                    onBecameDirty={handleInputBecameDirty}                                    
                                     className="ec-form-input"
                                 />
                             </div>

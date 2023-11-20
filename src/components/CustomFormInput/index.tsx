@@ -5,7 +5,7 @@ const CustomFormInput = (props: any) => {
     const { validation,
         invalid = "false",
         dirty = "false",
-        onTurnDirty,
+        onBecameDirty,
         ...inputProps
     } = props;
 
@@ -13,7 +13,7 @@ const CustomFormInput = (props: any) => {
     // evento onBlur é disparado quando é removido o foco no campo
     // no caso ativar a função dirty apenas quando o usuário sair do campo
     function handleBlur() {
-        onTurnDirty(props.name);
+        onBecameDirty(props.name);
     }
 
     return (

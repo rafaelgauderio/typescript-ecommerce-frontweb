@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useParams } from "react-router-dom";
 import "./styles.css";
 import { useEffect, useState } from "react";
@@ -68,23 +69,21 @@ const ProductForm = () => {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleInputOnChange = (event: any) => {
-
         const inputName = event.target.name;
         const inputValue = event.target.value;
         // atualizando os dados
-        const updateData = inputForms.updateInputFields(formData, inputName, inputValue);
+        //const updateData = inputForms.updateInputFields(formData, inputName, inputValue);
         // validando os dados atualizados
-        const validateData = inputForms.validateFields(updateData, inputName);
+        //const validateData = inputForms.validateFields(updateData, inputName);
         // setando os dados validos e atualizados
-        setFormData(validateData);
+        const updatedAndValidatedData = inputForms.updateAndValidateFields(formData, inputName, inputValue);
+        setFormData(updatedAndValidatedData);
     };
 
-
-    const  handleInputBecameDirty = (name: string) => {
-        const newFormData = inputForms.addFieldDirty(formData, name);
+    const handleInputBecameDirty = (name: string) => {
+        const newFormData = inputForms.addFieldDirtyAndValidatedData(formData, name);
         setFormData(newFormData);
     };
-
 
     return (
         <main>
@@ -97,7 +96,7 @@ const ProductForm = () => {
                                 <CustomFormInput
                                     {...formData.name}
                                     onChange={handleInputOnChange}
-                                    onTurnDirty={handleInputBecameDirty}
+                                    onBecameDirty={handleInputBecameDirty}
                                     className="ec-form-input"
                                 />
                                 <div className="ec-form-error">{formData.name.message}</div>
@@ -107,7 +106,7 @@ const ProductForm = () => {
                                 <CustomFormInput
                                     {...formData.price}
                                     onChange={handleInputOnChange}
-                                    onTurnDirty={handleInputBecameDirty}
+                                    onBecameDirty={handleInputBecameDirty}
                                     className="ec-form-input"
 
                                 />
@@ -118,7 +117,7 @@ const ProductForm = () => {
                                 <CustomFormInput
                                     {...formData.imgUrl}
                                     onChange={handleInputOnChange}
-                                    onTurnDirty={handleInputBecameDirty}
+                                    onBecameDirty={handleInputBecameDirty}
                                     className="ec-form-input"
                                 />
                             </div>
