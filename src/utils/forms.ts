@@ -8,7 +8,6 @@ export function updateInputFields(inputs: any, name: string, newValue: any) {
 
 }
 
-
 export function getFieldValueFromInputObject(inputs: any) {
     const objectData: any = {};
     // percorrer todos os atributos do objeto e pegar apenas o value
@@ -41,4 +40,22 @@ export function validateFields(inputs: any, fieldName: string): any {
         ...inputs,
         [fieldName]: { ...inputs[fieldName], invalid: isInvalid.toString() }
     };
+}
+
+export function addFieldDirty(inputs: any, fieldName: string) {
+    return {
+        ...inputs, [fieldName]: { ...inputs[fieldName], dirty: "true" }
+    };
+}
+
+export function updateAndValidateFields(inputs: any, fieldName: string, newValue: any) {
+    const updatedData = updateInputFields(inputs, fieldName, newValue);
+    const validatedData = validateFields(updatedData, fieldName);
+    return validatedData
+}
+
+export function addFieldDirtyAndValidatedData(inputs: any, fieldName: string) {
+    const dirtyData = addFieldDirty(inputs, fieldName);
+    const validatedData = validateFields(dirtyData, fieldName);
+    return validatedData;
 }

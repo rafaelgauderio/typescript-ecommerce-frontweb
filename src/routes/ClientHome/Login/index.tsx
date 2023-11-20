@@ -9,6 +9,7 @@ import * as inputForms from '../../../utils/forms';
 
 const Login = () => {
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [formData, setFormData] = useState<any>({
         username: {
             value: "",
@@ -27,6 +28,11 @@ const Login = () => {
             name: "password",
             type: "password",
             placeholder: "Senha",
+            validation: function (value: string) {
+                //return value.length >= 6;
+                return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
+            },
+            message: "Campo senha com mínimo de 8 caractes, pelo um caracter maiúsculo, um minúsculo e um alfa numérico",
         }
     })
 
@@ -60,10 +66,15 @@ const Login = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleInputOnChange = (event: any) => {
         const inputName = event.target.name;
-        const inputValue = event.target.value;
-        setFormData(inputForms.updateInputFields(formData, inputName, inputValue));
-    }
+        const inputValue = event.target.value;      
+        const updatedAndValidatedData = inputForms.updateAndValidateFields(formData, inputName, inputValue);
+        setFormData(updatedAndValidatedData);
+    };
 
+    const handleInputBecameDirty = (name: string) => {
+        const newFormData = inputForms.addFieldDirtyAndValidatedData(formData, name);
+        setFormData(newFormData);
+    };
     return (
 
         <main>
@@ -76,15 +87,19 @@ const Login = () => {
                                 <CustomFormInput
                                     {...formData.username}
                                     onChange={handleInputOnChange}
+                                    onBecameDirty={handleInputBecameDirty}  
                                     className="ec-form-input"
                                 />
+                                <div className='ec-form-error'>{formData.username.message}</div>
                             </div>
                             <div>
                                 <CustomFormInput
                                     {...formData.password}
                                     onChange={handleInputOnChange}
+                                    onBecameDirty={handleInputBecameDirty}                                    
                                     className="ec-form-input"
                                 />
+                                <div className='ec-form-error'>{formData.password.message}</div>
                             </div>
                         </div>
 

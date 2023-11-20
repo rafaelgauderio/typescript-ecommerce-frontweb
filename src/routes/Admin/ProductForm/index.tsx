@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useParams } from "react-router-dom";
 import "./styles.css";
 import { useEffect, useState } from "react";
@@ -17,6 +18,11 @@ const ProductForm = () => {
             name: "name",
             type: "text",
             placeholder: "Nome",
+            validation: function(nameValue: string) {
+                //return nameValue.length >=5 && nameValue.length <=50;
+                return /^.{5,50}$/.test(nameValue);
+            },
+            message: "Campo nome tem que ter entre 5 e 50 caracteres"
         },
         price: {
             value: "",
@@ -66,16 +72,22 @@ const ProductForm = () => {
 
     }, []);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleInputOnChange = (event: any) => {
-
         const inputName = event.target.name;
         const inputValue = event.target.value;
         // atualizando os dados
-        const updateData = inputForms.updateInputFields(formData, inputName, inputValue);
+        //const updateData = inputForms.updateInputFields(formData, inputName, inputValue);
         // validando os dados atualizados
-        const validateData = inputForms.validateFields(updateData, inputName);
+        //const validateData = inputForms.validateFields(updateData, inputName);
         // setando os dados validos e atualizados
-        setFormData(validateData);
+        const updatedAndValidatedData = inputForms.updateAndValidateFields(formData, inputName, inputValue);
+        setFormData(updatedAndValidatedData);
+    };
+
+    const handleInputBecameDirty = (name: string) => {
+        const newFormData = inputForms.addFieldDirtyAndValidatedData(formData, name);
+        setFormData(newFormData);
     };
 
     return (
@@ -89,6 +101,7 @@ const ProductForm = () => {
                                 <CustomFormInput
                                     {...formData.name}
                                     onChange={handleInputOnChange}
+                                    onBecameDirty={handleInputBecameDirty}
                                     className="ec-form-input"
                                 />
                                 <div className="ec-form-error">{formData.name.message}</div>
@@ -98,6 +111,7 @@ const ProductForm = () => {
                                 <CustomFormInput
                                     {...formData.price}
                                     onChange={handleInputOnChange}
+                                    onBecameDirty={handleInputBecameDirty}
                                     className="ec-form-input"
 
                                 />
@@ -108,6 +122,7 @@ const ProductForm = () => {
                                 <CustomFormInput
                                     {...formData.imgUrl}
                                     onChange={handleInputOnChange}
+                                    onBecameDirty={handleInputBecameDirty}
                                     className="ec-form-input"
                                 />
                             </div>
