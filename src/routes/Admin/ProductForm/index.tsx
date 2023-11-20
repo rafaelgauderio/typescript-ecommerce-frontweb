@@ -18,6 +18,11 @@ const ProductForm = () => {
             name: "name",
             type: "text",
             placeholder: "Nome",
+            validation: function(nameValue: string) {
+                //return nameValue.length >=5 && nameValue.length <=50;
+                return /^.{5,50}$/.test(nameValue);
+            },
+            message: "Campo nome tem que ter entre 5 e 50 caracteres"
         },
         price: {
             value: "",

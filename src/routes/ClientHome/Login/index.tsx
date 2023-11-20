@@ -28,6 +28,10 @@ const Login = () => {
             name: "password",
             type: "password",
             placeholder: "Senha",
+            validation: function (value: string) {
+                return value.length >= 6;
+            },
+            message: "Mínimo de 6 dígitos para o campo senha"
         }
     })
 
@@ -85,6 +89,7 @@ const Login = () => {
                                     onBecameDirty={handleInputBecameDirty}  
                                     className="ec-form-input"
                                 />
+                                <div className='ec-form-error'>{formData.username.message}</div>
                             </div>
                             <div>
                                 <CustomFormInput
@@ -93,6 +98,7 @@ const Login = () => {
                                     onBecameDirty={handleInputBecameDirty}                                    
                                     className="ec-form-input"
                                 />
+                                <div className='ec-form-error'>{formData.password.message}</div>
                             </div>
                         </div>
 
