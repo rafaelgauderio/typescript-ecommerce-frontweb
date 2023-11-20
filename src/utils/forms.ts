@@ -42,3 +42,9 @@ export function validateFields(inputs: any, fieldName: string): any {
         [fieldName]: { ...inputs[fieldName], invalid: isInvalid.toString() }
     };
 }
+
+export function addFieldDirty(inputs: any, name: string) {
+    return {
+        ...inputs, [name]: { ...inputs[name], dirty: "true" }
+    };
+}

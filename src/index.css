@@ -237,11 +237,11 @@ a:hover {
   display: none;
 }
 
-.ec-form-input[data-invalid="true"] ~ div {
+.ec-form-input[data-dirty="true"][data-invalid="true"] ~ div {
   display: unset !important;
 }
 
-.ec-form-input[data-invalid="true"] {
+.ec-form-input[data-dirty="true"][data-invalid="true"] {
   border: 1px solid var(--color-danger);
 }
 

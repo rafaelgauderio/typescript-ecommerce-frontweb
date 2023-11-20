@@ -66,6 +66,7 @@ const ProductForm = () => {
 
     }, []);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleInputOnChange = (event: any) => {
 
         const inputName = event.target.name;
@@ -78,6 +79,13 @@ const ProductForm = () => {
         setFormData(validateData);
     };
 
+
+    const  handleInputBecameDirty = (name: string) => {
+        const newFormData = inputForms.addFieldDirty(formData, name);
+        setFormData(newFormData);
+    };
+
+
     return (
         <main>
             <section id="product-form-section" className="ec-container">
@@ -89,6 +97,7 @@ const ProductForm = () => {
                                 <CustomFormInput
                                     {...formData.name}
                                     onChange={handleInputOnChange}
+                                    onTurnDirty={handleInputBecameDirty}
                                     className="ec-form-input"
                                 />
                                 <div className="ec-form-error">{formData.name.message}</div>
@@ -98,6 +107,7 @@ const ProductForm = () => {
                                 <CustomFormInput
                                     {...formData.price}
                                     onChange={handleInputOnChange}
+                                    onTurnDirty={handleInputBecameDirty}
                                     className="ec-form-input"
 
                                 />
@@ -108,6 +118,7 @@ const ProductForm = () => {
                                 <CustomFormInput
                                     {...formData.imgUrl}
                                     onChange={handleInputOnChange}
+                                    onTurnDirty={handleInputBecameDirty}
                                     className="ec-form-input"
                                 />
                             </div>
