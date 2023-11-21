@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import CustomFormInput from "../../../components/CustomFormInput";
 import * as inputForms from '../../../utils/forms';
 import * as productService from '../../../services/product-services';
+import * as categoryService from '../../../services/category-services';
 import CustomFormTextArea from "../../../components/CustomFormTextArea";
 import Select from "react-select";
+import { CategoryDTO } from "../../../models/category";
 
 
 const ProductForm = () => {
@@ -57,9 +59,27 @@ const ProductForm = () => {
         }
     });
 
+    //vetor mocado de object do tipo select para categorias
+    /*
+    const mockCategories = [
+        { value: 'computadores', label: "Computadores" },
+        { value: "eletronicos", label: "Eletrônicos" },
+        { value: "livros", label: "Livros" }
+    ];
+    */
+
+    const [categories, setCategories] = useState<CategoryDTO[]>([]);
+
     const parameters = useParams();
 
     const isEditing = parameters.productId !== 'create';
+
+    useEffect(() => {
+        categoryService.findAllCategoriesRequest()
+            .then((response) => {
+                setCategories(response.data);
+            })
+    });
 
     useEffect(() => {
 
@@ -103,12 +123,6 @@ const ProductForm = () => {
         setFormData(newFormData);
     };
 
-    //vetor mocado de object do tipo select para categorias
-    const mockCategories = [
-        { value: 'computadores', label: "Computadores" },
-        { value: "eletronicos", label: "Eletrônicos" },
-        { value: "livros", label: "Livros" }
-    ];
 
     return (
         <main>
@@ -146,9 +160,10 @@ const ProductForm = () => {
                             </div>
                             <div>
                                 <Select
-                                    options={mockCategories}
-                                    isMulti
-                                    name="categorias"
+                                    options={categories}
+                                    isMulti                                    
+                                    getOptionLabel={(objeto) => objeto.name}
+                                    getOptionValue={(objeto) => String(objeto.id)}
                                 />
 
                             </div>
