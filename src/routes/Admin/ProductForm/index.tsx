@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import CustomFormInput from "../../../components/CustomFormInput";
 import * as inputForms from '../../../utils/forms';
 import * as productService from '../../../services/product-services';
+import CustomFormTextArea from "../../../components/CustomFormTextArea";
 
 
 const ProductForm = () => {
@@ -18,7 +19,7 @@ const ProductForm = () => {
             name: "name",
             type: "text",
             placeholder: "Nome",
-            validation: function(nameValue: string) {
+            validation: function (nameValue: string) {
                 //return nameValue.length >=5 && nameValue.length <=50;
                 return /^.{5,50}$/.test(nameValue);
             },
@@ -29,7 +30,7 @@ const ProductForm = () => {
             id: "price",
             name: "price",
             type: "number",
-            placehodler: "Preço",
+            placeholder: "Preço",
             validation: function (priceValue: any) {
                 return Number(priceValue) > 0
             },
@@ -42,6 +43,17 @@ const ProductForm = () => {
             type: "text",
             placeholder: "Imagem do Produto"
         },
+        description: {
+            value: "",
+            id: "description",
+            name: "description",
+            type: "text",
+            placeholder: "Descrição do Produto",
+            validation: function (descriptionValue: string) {
+                return /^.{10,200}$/.test(descriptionValue);
+            },
+            message: "Campo descrição tem que ter entre 10 e 200 caracteres"
+        }
     });
 
     const parameters = useParams();
@@ -134,9 +146,16 @@ const ProductForm = () => {
                                     <option value="2">Valor 2</option>
                                 </select>
                             </div>
+    */}
                             <div>
-                                <textarea className="ec-form-input ec-textarea" placeholder="Descrição"></textarea>
-                            </div> */}
+                                <CustomFormTextArea
+                                    {...formData.description}
+                                    onChange={handleInputOnChange}
+                                    onBecameDirty={handleInputBecameDirty}
+                                    className="ec-form-input ec-textarea"
+                                />
+                                <div className="ec-form-error">{formData.description.message}</div>
+                            </div>
                         </div>
 
                         <div className="ec-product-form-buttons">
