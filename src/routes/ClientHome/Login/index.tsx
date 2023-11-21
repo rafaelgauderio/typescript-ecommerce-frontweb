@@ -30,9 +30,9 @@ const Login = () => {
             placeholder: "Senha",
             validation: function (value: string) {
                 //return value.length >= 6;
-                return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
+                return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$/.test(value);
             },
-            message: "Campo senha com mínimo de 8 caractes, pelo um caracter maiúsculo, um minúsculo e um alfa numérico",
+            message: "Campo senha com mínimo de 8 caractes e no máximo 30, pelo menos um caracter maiúsculo, um minúsculo e um alfa numérico.",
         }
     })
 
