@@ -6,6 +6,7 @@ import CustomFormInput from "../../../components/CustomFormInput";
 import * as inputForms from '../../../utils/forms';
 import * as productService from '../../../services/product-services';
 import CustomFormTextArea from "../../../components/CustomFormTextArea";
+import Select from "react-select";
 
 
 const ProductForm = () => {
@@ -102,6 +103,13 @@ const ProductForm = () => {
         setFormData(newFormData);
     };
 
+    //vetor mocado de object do tipo select para categorias
+    const mockCategories = [
+        { value: 'computadores', label: "Computadores" },
+        { value: "eletronicos", label: "Eletrônicos" },
+        { value: "livros", label: "Livros" }
+    ];
+
     return (
         <main>
             <section id="product-form-section" className="ec-container">
@@ -118,7 +126,6 @@ const ProductForm = () => {
                                 />
                                 <div className="ec-form-error">{formData.name.message}</div>
                             </div>
-
                             <div>
                                 <CustomFormInput
                                     {...formData.price}
@@ -129,7 +136,6 @@ const ProductForm = () => {
                                 />
                                 <div className="ec-form-error">{formData.price.message}</div>
                             </div>
-
                             <div>
                                 <CustomFormInput
                                     {...formData.imgUrl}
@@ -138,15 +144,14 @@ const ProductForm = () => {
                                     className="ec-form-input"
                                 />
                             </div>
-                            {/*
                             <div>
-                                <select className="ec-form-input ec-select" required>
-                                    <option value="" disabled selected>Categorias</option>
-                                    <option value="1">Valor 1</option>
-                                    <option value="2">Valor 2</option>
-                                </select>
+                                <Select
+                                    options={mockCategories}
+                                    isMulti
+                                    name="categorias"
+                                />
+
                             </div>
-    */}
                             <div>
                                 <CustomFormTextArea
                                     {...formData.description}
