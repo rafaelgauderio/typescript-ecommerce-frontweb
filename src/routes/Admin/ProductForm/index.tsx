@@ -157,7 +157,6 @@ const ProductForm = () => {
                                     onChange={handleInputOnChange}
                                     onBecameDirty={handleInputBecameDirty}
                                     className="ec-form-input"
-
                                 />
                                 <div className="ec-form-error">{formData.price.message}</div>
                             </div>
@@ -172,20 +171,22 @@ const ProductForm = () => {
                             <div>
                                 <CustomFormSelect
                                     {...formData.categories}
+                                    className="ec-form-input"
                                     options={categories}
-                                    isMulti
-
                                     onChange={(objeto: any) => {
                                         const newFormData = inputForms.updateAndValidateFields(formData, "categories", objeto);
                                         // atualizando a lista selecionada
-                                        console.log(newFormData.categories);
+                                        //console.log(newFormData.categories);
                                         setFormData(newFormData);
                                     }}
+                                    isMulti
                                     onBecameDirty={handleInputBecameDirty}
-                                    getOptionLabel={(objeto: { name: any; }) => objeto.name}
-                                    getOptionValue={(objeto: { id: any; }) => String(objeto.id)}
-                                />
+                                    getOptionLabel={(objeto: any) => objeto.name}
+                                    getOptionValue={(objeto: any) => String(objeto.id)
+                                    }
 
+                                />
+                                <div className="ec-form-error">{formData.categories.message}</div>
                             </div>
                             <div>
                                 <CustomFormTextArea
