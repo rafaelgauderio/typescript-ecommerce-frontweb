@@ -7,8 +7,8 @@ import * as inputForms from '../../../utils/forms';
 import * as productService from '../../../services/product-services';
 import * as categoryService from '../../../services/category-services';
 import CustomFormTextArea from "../../../components/CustomFormTextArea";
-import Select from "react-select";
 import { CategoryDTO } from "../../../models/category";
+import CustomFormSelect from "../../../components/CustomFormSelect";
 
 
 const ProductForm = () => {
@@ -56,7 +56,18 @@ const ProductForm = () => {
                 return /^.{10,200}$/.test(descriptionValue);
             },
             message: "Campo descrição tem que ter entre 10 e 200 caracteres"
-        }
+        },
+        // categorias selecionados no select
+        categories: {
+            value: [],
+            id: "categories",
+            name: "categories",
+            placeholder: "Categorias do Produto",
+            validation: function (categoriesValue: CategoryDTO[]) {
+                return categoriesValue.length > 0;
+            },
+            message: "Produto deve ser vinculado a pelo menos uma categoria"
+        },
     });
 
     //vetor mocado de object do tipo select para categorias
@@ -159,11 +170,20 @@ const ProductForm = () => {
                                 />
                             </div>
                             <div>
-                                <Select
+                                <CustomFormSelect
+                                    {...formData.categories}
                                     options={categories}
-                                    isMulti                                    
-                                    getOptionLabel={(objeto) => objeto.name}
-                                    getOptionValue={(objeto) => String(objeto.id)}
+                                    isMulti
+
+                                    onChange={(objeto: any) => {
+                                        const newFormData = inputForms.updateAndValidateFields(formData, "categories", objeto);
+                                        // atualizando a lista selecionada
+                                        console.log(newFormData.categories);
+                                        setFormData(newFormData);
+                                    }}
+                                    onBecameDirty={handleInputBecameDirty}
+                                    getOptionLabel={(objeto: { name: any; }) => objeto.name}
+                                    getOptionValue={(objeto: { id: any; }) => String(objeto.id)}
                                 />
 
                             </div>
