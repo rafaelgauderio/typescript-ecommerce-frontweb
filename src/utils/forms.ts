@@ -69,3 +69,21 @@ export function turnAllFieldsDirty(inputs: any) {
     }
     return newDirtyInputs;
 }
+
+export function validateAllFields(inputs: any) {
+    const newValidadeInputs: any = {};
+    for (const fieldName in inputs) {
+        if (inputs[fieldName].validation == undefined) {
+            const isFieldInvalid: boolean = inputs[fieldName].validateFields(inputs[fieldName].value);
+            newValidadeInputs[fieldName] = { ...inputs[fieldName], invalid: isFieldInvalid.toString() };
+        } else {
+            newValidadeInputs[fieldName] = {
+                ...inputs[fieldName]
+            }
+        }
+    }
+
+    return newValidadeInputs;
+
+
+}
