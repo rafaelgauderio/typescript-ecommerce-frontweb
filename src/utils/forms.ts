@@ -59,3 +59,13 @@ export function addFieldDirtyAndValidatedData(inputs: any, fieldName: string) {
     const validatedData = validateFields(dirtyData, fieldName);
     return validatedData;
 }
+
+export function turnAllFieldsDirty(inputs: any) {
+    const newDirtyInputs: any = {};
+    for (const fieldName in inputs) {
+        newDirtyInputs[fieldName] = {
+            ...inputs[fieldName], dirty: "true"
+        };
+    }
+    return newDirtyInputs;
+}
