@@ -9,6 +9,7 @@ import * as categoryService from '../../../services/category-services';
 import CustomFormTextArea from "../../../components/CustomFormTextArea";
 import { CategoryDTO } from "../../../models/category";
 import CustomFormSelect from "../../../components/CustomFormSelect";
+import { selectStyles } from "../../../utils/select";
 
 
 const ProductForm = () => {
@@ -171,15 +172,16 @@ const ProductForm = () => {
                             <div>
                                 <CustomFormSelect
                                     {...formData.categories}
-                                    className="ec-form-input"
+                                    className="ec-form-input ec-form-select-container"
                                     options={categories}
+                                    styles={selectStyles}
                                     onChange={(objeto: any) => {
                                         const newFormData = inputForms.updateAndValidateFields(formData, "categories", objeto);
                                         // atualizando a lista selecionada
                                         //console.log(newFormData.categories);
                                         setFormData(newFormData);
                                     }}
-                                    isMulti
+                                    isMulti  
                                     onBecameDirty={handleInputBecameDirty}
                                     getOptionLabel={(objeto: any) => objeto.name}
                                     getOptionValue={(objeto: any) => String(objeto.id)
