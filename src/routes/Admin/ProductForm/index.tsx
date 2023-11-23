@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useParams } from "react-router-dom";
 import "./styles.css";
@@ -135,12 +136,17 @@ const ProductForm = () => {
         setFormData(newFormData);
     };
 
+    const handleOnSubmit = (event : any) => {
+        event.preventDefault();
+        console.log(inputForms.getFieldValueFromInputObject(formData));
+    };
+
 
     return (
         <main>
             <section id="product-form-section" className="ec-container">
                 <div className="ec-product-form-container">
-                    <form className="ec-card-general ec-form-general">
+                    <form className="ec-card-general ec-form-general" onSubmit={handleOnSubmit}>
                         <h2>Dados do produto</h2>
                         <div className="ec-form-inputs-container">
                             <div>
