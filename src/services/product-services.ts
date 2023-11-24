@@ -42,6 +42,14 @@ export function updateProductById(productObject: ProductDTO): AxiosPromise {
         data: productObject
     }
     return requestBackend(configuration);
-
 }
 
+export function inserNewProduct(productObject: ProductDTO): AxiosPromise {
+    const configuration: AxiosRequestConfig = {
+        method: "POST",
+        url: "/products",
+        withCredentials: true,
+        data: productObject
+    }
+    return requestBackend(configuration)
+}

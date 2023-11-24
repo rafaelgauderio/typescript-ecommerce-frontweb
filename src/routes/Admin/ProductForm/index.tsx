@@ -149,13 +149,17 @@ const ProductForm = () => {
         const requestBody = inputForms.getFieldValueFromInputObject(formData);
         if (isEditing == true) {
             requestBody.id = parameters.productId;
+            productService.updateProductById(requestBody)
+                .then((requestResponse) => {
+                    navigate(routeCancelInsertion);
+                    //console.log(requestResponse);
+                })
+        } else {
+            productService.inserNewProduct(requestBody)
+                .then(() => {
+                    navigate(routeCancelInsertion);
+                });
         }
-        productService.updateProductById(requestBody)
-            .then((requestResponse) => {
-                navigate(routeCancelInsertion);
-                console.log(requestResponse);
-            })
-        console.log(requestBody);
     };
 
     return (
