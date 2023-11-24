@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./styles.css";
 import { useEffect, useState } from "react";
 import CustomFormInput from "../../../components/CustomFormInput";
@@ -55,7 +55,7 @@ const ProductForm = () => {
             type: "text",
             placeholder: "Descrição do Produto",
             validation: function (descriptionValue: string) {
-                return /^.{10,200}$/.test(descriptionValue);
+                return /^.{10,800}$/.test(descriptionValue);
             },
             message: "Campo descrição tem que ter entre 10 e 200 caracteres"
         },
@@ -86,6 +86,8 @@ const ProductForm = () => {
     const parameters = useParams();
 
     const isEditing = parameters.productId !== 'create';
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         categoryService.findAllCategoriesRequest()
@@ -136,16 +138,25 @@ const ProductForm = () => {
         setFormData(newFormData);
     };
 
-    const handleOnSubmit = (event: any) : void =>  {
+    // função para enviar o formulário
+    const handleOnSubmit = (event: any): void => {
         event.preventDefault();
         const formDataValidatedAfterTurnDiry = inputForms.validateAllFieldsAfterDirtyAllFiedls(formData);
         if (inputForms.hasAnyInvalidFieldAfterValidateAll(formDataValidatedAfterTurnDiry) == true) {
             setFormData(formDataValidatedAfterTurnDiry);
             return; // sai da função e não envia o formulário
         }
-        //console.log(inputForms.getFieldValueFromInputObject(formData));
+        const requestBody = inputForms.getFieldValueFromInputObject(formData);
+        if (isEditing == true) {
+            requestBody.id = parameters.productId;
+        }
+        productService.updateProductById(requestBody)
+            .then((requestResponse) => {
+                navigate(routeCancelInsertion);
+                console.log(requestResponse);
+            })
+        console.log(requestBody);
     };
-
 
     return (
         <main>
