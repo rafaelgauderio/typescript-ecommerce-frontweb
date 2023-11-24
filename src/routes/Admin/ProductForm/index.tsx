@@ -11,6 +11,7 @@ import CustomFormTextArea from "../../../components/CustomFormTextArea";
 import { CategoryDTO } from "../../../models/category";
 import CustomFormSelect from "../../../components/CustomFormSelect";
 import { selectStyles } from "../../../utils/select";
+import { AxiosResponse } from "axios";
 
 
 const ProductForm = () => {
@@ -147,17 +148,26 @@ const ProductForm = () => {
             return; // sai da função e não envia o formulário
         }
         const requestBody = inputForms.getFieldValueFromInputObject(formData);
+
         if (isEditing == true) {
             requestBody.id = parameters.productId;
             productService.updateProductById(requestBody)
-                .then((requestResponse) => {
+                .then(() => {
                     navigate(routeCancelInsertion);
-                    //console.log(requestResponse);
                 })
+                .catch((error) => {
+                    const newInputsWithBackendErrosMessage = inputForms.setErrosFromBackend(formData, error.response.data.errors);
+                    setFormData(newInputsWithBackendErrosMessage);
+                });
+
         } else {
             productService.inserNewProduct(requestBody)
                 .then(() => {
                     navigate(routeCancelInsertion);
+                })
+                .catch((error) => {
+                    const newInputsWithBackendErrosMessage = inputForms.setErrosFromBackend(formData, error.response.data.errors);
+                    setFormData(newInputsWithBackendErrosMessage);
                 });
         }
     };

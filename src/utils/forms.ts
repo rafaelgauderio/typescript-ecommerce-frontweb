@@ -105,3 +105,14 @@ export function hasAnyInvalidFieldAfterValidateAll(inputs: any): any {
     }
     return false;
 }
+
+
+export function setErrosFromBackend(inputs: any, listErrors: any[]): any {
+    const inputsObject = { ...inputs };
+    listErrors.forEach((errorListItem) => {
+        inputsObject[errorListItem.fieldName].message = errorListItem.message;
+        inputsObject[errorListItem.fieldName].invalid = "true";
+        inputsObject[errorListItem.fieldName].dirty = "true";
+    });
+    return inputsObject;
+}
