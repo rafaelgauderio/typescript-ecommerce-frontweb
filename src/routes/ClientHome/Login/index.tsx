@@ -38,11 +38,21 @@ const Login = () => {
 
     const navigate = useNavigate();
 
+    const [submitResponseFormWithFail, setSubmitResponseFormWithFail] = useState(false);
+
     const { setGlobalContextTokenPayload } = useContext(GlobalContextToken);
 
     const handleSubmitForm = (event: React.FormEvent<HTMLDivElement>) => {
         event.preventDefault();
-        //console.log(inputForms.getFieldValueFromInputObject(formData));
+
+        setSubmitResponseFormWithFail(false);
+        // se o campo email estiver sujo (email inválido), sai da função e não enviar o form ao backend para testar email e senha no bando de dados    
+        const formDataValidatedAfterTurnDiry = inputForms.validateAllFieldsAfterDirtyAllFiedls(formData);
+        if (inputForms.hasAnyInvalidFieldAfterValidateAll(formDataValidatedAfterTurnDiry) == true) {
+            setFormData(formDataValidatedAfterTurnDiry);
+            return;
+        }
+
         authenticationService.loginRequest(
             inputForms.getFieldValueFromInputObject(formData)
         )
@@ -59,14 +69,17 @@ const Login = () => {
                 //console.log(authenticationService.getAccessTokenPayload()?.scope);
             })
             .catch(error => {
-                console.log("Login error: " + error);
+                // se tiver algum erro seta como verdadeiro para renderizar a div de erro
+                setSubmitResponseFormWithFail(true);
+                //console.log("Errro de Login: " + error);
+                //console.log(error);
             })
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleInputOnChange = (event: any) => {
         const inputName = event.target.name;
-        const inputValue = event.target.value;      
+        const inputValue = event.target.value;
         const updatedAndValidatedData = inputForms.updateAndValidateFields(formData, inputName, inputValue);
         setFormData(updatedAndValidatedData);
     };
@@ -87,7 +100,7 @@ const Login = () => {
                                 <CustomFormInput
                                     {...formData.username}
                                     onChange={handleInputOnChange}
-                                    onBecameDirty={handleInputBecameDirty}  
+                                    onBecameDirty={handleInputBecameDirty}
                                     className="ec-form-input"
                                 />
                                 <div className='ec-form-error'>{formData.username.message}</div>
@@ -96,12 +109,17 @@ const Login = () => {
                                 <CustomFormInput
                                     {...formData.password}
                                     onChange={handleInputOnChange}
-                                    onBecameDirty={handleInputBecameDirty}                                    
+                                    onBecameDirty={handleInputBecameDirty}
                                     className="ec-form-input"
                                 />
                                 <div className='ec-form-error'>{formData.password.message}</div>
                             </div>
-                        </div>
+                        </div>{
+                            submitResponseFormWithFail == true &&
+                            <div className="ec-form-global-error">
+                                Usuário ou senha inválidos
+                            </div>
+                        }
 
                         <div className="ec-login-form-buttons ec-margin-bottom-20px">
                             <button type="submit" className="ec-btn ec-btn-entrar">Entrar</button>

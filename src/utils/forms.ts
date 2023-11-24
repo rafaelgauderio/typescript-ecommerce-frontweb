@@ -59,3 +59,60 @@ export function addFieldDirtyAndValidatedData(inputs: any, fieldName: string) {
     const validatedData = validateFields(dirtyData, fieldName);
     return validatedData;
 }
+
+export function turnAllFieldsDirty(inputs: any): any {
+    const newDirtyInputs: any = {};
+    for (const fieldName in inputs) {
+        newDirtyInputs[fieldName] = {
+            ...inputs[fieldName], dirty: "true"
+        };
+    }
+    return newDirtyInputs;
+}
+
+export function validateAllFields(inputs: any): any {
+    const newValidadeInputs: any = {};
+    for (const fieldName in inputs) {
+        if (inputs[fieldName].validation != undefined) {
+            // verifica se o valor do input no campo fieldname é valido
+            const isFieldInvalid: boolean = !inputs[fieldName].validation(inputs[fieldName].value);
+            // adiciona o valor invalid ao novo objeto
+            newValidadeInputs[fieldName] = { ...inputs[fieldName], invalid: isFieldInvalid.toString() };
+        } else {
+            // senão estiver definido o campo validation, o novo objeto vai ser o objeto inputs anterior sem alterar nada
+            newValidadeInputs[fieldName] = {
+                ...inputs[fieldName]
+            }
+        }
+    }
+    return newValidadeInputs;
+}
+
+export function validateAllFieldsAfterDirtyAllFiedls(inputs: any): any {
+    // validar os campos após adicionar o campo dirty = true deles
+    const inputsValidateAfterDirty: any = validateAllFields(turnAllFieldsDirty(inputs));
+    return inputsValidateAfterDirty;
+}
+
+// após fazer a validação depois de sujar (adicionar field dirty: true), tem que testar se ainda resta algum 
+// campo inválido antes de enviar o formulário
+
+export function hasAnyInvalidFieldAfterValidateAll(inputs: any): any {
+    for (const fieldName in inputs) {
+        if (inputs[fieldName].invalid === "true" && inputs[fieldName].dirty === "true") {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+export function setErrosFromBackend(inputs: any, listErrors: any[]): any {
+    const inputsObject = { ...inputs };
+    listErrors.forEach((errorListItem) => {
+        inputsObject[errorListItem.fieldName].message = errorListItem.message;
+        inputsObject[errorListItem.fieldName].invalid = "true";
+        inputsObject[errorListItem.fieldName].dirty = "true";
+    });
+    return inputsObject;
+}

@@ -42,6 +42,7 @@ const ProductListing = () => {
     const navigate = useNavigate();
 
     const routeInsertNewProduct: string = "/admin/products/create";
+    const routeUpdateExistingProduct: string = ("/admin/products/");
 
     useEffect(() => {
 
@@ -84,8 +85,8 @@ const ProductListing = () => {
         setDialogConfirmationModalData({ ...dialogConfirmationModalData, visiable: true, id: productId })
     }
 
-    const functionHandleEditClick = () => {
-        setDialogInfoModalData({ ...dialogConfirmationModalData, visiable: true })
+    const functionHandleUpdateClick = (productId: number) => {
+        navigate(routeUpdateExistingProduct + `${productId}`);        
     }
 
     const functionHandleDialogConfirmationAnswer = (arg1: boolean, productId: number) => {
@@ -142,7 +143,7 @@ const ProductListing = () => {
                                     <td><img className="ec-product-listing-image" src={produto.imgUrl} alt={produto.name} /> </td>
                                     <td className="ec-table-bootstrap-576px">R$ {produto.price.toFixed(2)}</td>
                                     <td className="ec-txt-left">{produto.name}</td>
-                                    <td><img className="ec-product-listing-btn" onClick={functionHandleEditClick} src={editIcon} alt="Editar" /></td>
+                                    <td><img className="ec-product-listing-btn" onClick={() => functionHandleUpdateClick(produto.id)} src={editIcon} alt="Editar" /></td>
                                     <td><img className="ec-product-listing-btn" onClick={() => functionHandleDeleteClick(produto.id)} src={deleteIcon} alt="Deletar" /></td>
                                 </tr>
                             ))

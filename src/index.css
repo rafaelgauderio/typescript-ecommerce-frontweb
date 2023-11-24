@@ -6,6 +6,8 @@
   --color-bg-tertiary: #0f408a;
   --color-bg-white: #fff;
   --color-bg-red: #f00;
+  --color-bg-gray: #454545;
+  --color-bg-blue-50: #bfddf3;
 
   --color-shadow-box: #b7b7b7;
 
@@ -17,9 +19,10 @@
 
   --color-font-primary: #454545;
   --color-font-secondary: #0caf1d;
+  --color-font-tertiary: #0f408a;
   --color-font-white: #fff;
   --color-font-blue: #3485fb;
-  --color-font-placeholder: #d6d6d6;
+  --color-font-placeholder: #b5b5b5;
 
   --color-success: #00c851;
   --color-warning: #ffbb33;
@@ -230,6 +233,10 @@ a:hover {
   outline: none;
 }
 
+.ec-form-input::placeholder {
+  color: var(--color-font-placeholder);
+}
+
 .ec-form-error {
   color: var(--color-danger);
   padding: 5px;
@@ -237,30 +244,36 @@ a:hover {
   display: none;
 }
 
+.ec-form-global-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-bg-red);
+  font-size: 13px;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px 10px;
+  border: 1px solid var(--color-danger);
+  border-radius: 8px;
+}
+
 .ec-form-input[data-dirty="true"][data-invalid="true"] ~ div {
-  display: unset !important;
+  display: unset;
 }
 
 .ec-form-input[data-dirty="true"][data-invalid="true"] {
   border: 1px solid var(--color-danger);
 }
 
-.ec-select:invalid {
-  color: var(--color-font-placeholder);
-}
-
-.ec-select option[disabled] {
-  display: none;
-}
-
-.ec-select option {
-  color: var(--color-font-primary);
-}
-
 .ec-textarea {
   resize: none;
   height: 130px;
   padding-top: 10px;
+}
+
+.ec-form-select-container {
+  height: unset;
+  padding: unset;
 }
 
 /*form styles */

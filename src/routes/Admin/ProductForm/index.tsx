@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./styles.css";
 import { useEffect, useState } from "react";
 import CustomFormInput from "../../../components/CustomFormInput";
@@ -7,8 +8,10 @@ import * as inputForms from '../../../utils/forms';
 import * as productService from '../../../services/product-services';
 import * as categoryService from '../../../services/category-services';
 import CustomFormTextArea from "../../../components/CustomFormTextArea";
-import Select from "react-select";
 import { CategoryDTO } from "../../../models/category";
+import CustomFormSelect from "../../../components/CustomFormSelect";
+import { selectStyles } from "../../../utils/select";
+import { AxiosResponse } from "axios";
 
 
 const ProductForm = () => {
@@ -53,10 +56,21 @@ const ProductForm = () => {
             type: "text",
             placeholder: "Descrição do Produto",
             validation: function (descriptionValue: string) {
-                return /^.{10,200}$/.test(descriptionValue);
+                return /^.{10,800}$/.test(descriptionValue);
             },
             message: "Campo descrição tem que ter entre 10 e 200 caracteres"
-        }
+        },
+        // categorias selecionados no select
+        categories: {
+            value: [],
+            id: "categories",
+            name: "categories",
+            placeholder: "Categorias do Produto",
+            validation: function (categoriesValue: CategoryDTO[]) {
+                return categoriesValue.length > 0;
+            },
+            message: "Produto deve ser vinculado a pelo menos uma categoria"
+        },
     });
 
     //vetor mocado de object do tipo select para categorias
@@ -73,6 +87,8 @@ const ProductForm = () => {
     const parameters = useParams();
 
     const isEditing = parameters.productId !== 'create';
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         categoryService.findAllCategoriesRequest()
@@ -123,12 +139,44 @@ const ProductForm = () => {
         setFormData(newFormData);
     };
 
+    // função para enviar o formulário
+    const handleOnSubmit = (event: any): void => {
+        event.preventDefault();
+        const formDataValidatedAfterTurnDiry = inputForms.validateAllFieldsAfterDirtyAllFiedls(formData);
+        if (inputForms.hasAnyInvalidFieldAfterValidateAll(formDataValidatedAfterTurnDiry) == true) {
+            setFormData(formDataValidatedAfterTurnDiry);
+            return; // sai da função e não envia o formulário
+        }
+        const requestBody = inputForms.getFieldValueFromInputObject(formData);
+
+        if (isEditing == true) {
+            requestBody.id = parameters.productId;
+            productService.updateProductById(requestBody)
+                .then(() => {
+                    navigate(routeCancelInsertion);
+                })
+                .catch((error) => {
+                    const newInputsWithBackendErrosMessage = inputForms.setErrosFromBackend(formData, error.response.data.errors);
+                    setFormData(newInputsWithBackendErrosMessage);
+                });
+
+        } else {
+            productService.inserNewProduct(requestBody)
+                .then(() => {
+                    navigate(routeCancelInsertion);
+                })
+                .catch((error) => {
+                    const newInputsWithBackendErrosMessage = inputForms.setErrosFromBackend(formData, error.response.data.errors);
+                    setFormData(newInputsWithBackendErrosMessage);
+                });
+        }
+    };
 
     return (
         <main>
             <section id="product-form-section" className="ec-container">
                 <div className="ec-product-form-container">
-                    <form className="ec-card-general ec-form-general">
+                    <form className="ec-card-general ec-form-general" onSubmit={handleOnSubmit}>
                         <h2>Dados do produto</h2>
                         <div className="ec-form-inputs-container">
                             <div>
@@ -146,7 +194,6 @@ const ProductForm = () => {
                                     onChange={handleInputOnChange}
                                     onBecameDirty={handleInputBecameDirty}
                                     className="ec-form-input"
-
                                 />
                                 <div className="ec-form-error">{formData.price.message}</div>
                             </div>
@@ -159,13 +206,25 @@ const ProductForm = () => {
                                 />
                             </div>
                             <div>
-                                <Select
+                                <CustomFormSelect
+                                    {...formData.categories}
+                                    className="ec-form-input ec-form-select-container"
                                     options={categories}
-                                    isMulti                                    
-                                    getOptionLabel={(objeto) => objeto.name}
-                                    getOptionValue={(objeto) => String(objeto.id)}
-                                />
+                                    styles={selectStyles}
+                                    onChange={(objeto: any) => {
+                                        const newFormData = inputForms.updateAndValidateFields(formData, "categories", objeto);
+                                        // atualizando a lista selecionada
+                                        //console.log(newFormData.categories);
+                                        setFormData(newFormData);
+                                    }}
+                                    isMulti
+                                    onBecameDirty={handleInputBecameDirty}
+                                    getOptionLabel={(objeto: any) => objeto.name}
+                                    getOptionValue={(objeto: any) => String(objeto.id)
+                                    }
 
+                                />
+                                <div className="ec-form-error">{formData.categories.message}</div>
                             </div>
                             <div>
                                 <CustomFormTextArea

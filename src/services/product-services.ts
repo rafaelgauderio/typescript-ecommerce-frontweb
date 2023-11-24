@@ -1,5 +1,6 @@
-import { AxiosRequestConfig } from "axios";
+import { AxiosPromise, AxiosRequestConfig } from "axios";
 import { requestBackend } from "../utils/request";
+import { ProductDTO } from "../models/product";
 
 export function findAllPageRequest(pagina: number, nome: string, tamanho = 12, ordem = "name") {
     const configuration: AxiosRequestConfig = {
@@ -33,3 +34,22 @@ export function deleteProductById(id: number) {
     return requestBackend(configuration);
 }
 
+export function updateProductById(productObject: ProductDTO): AxiosPromise {
+    const configuration: AxiosRequestConfig = {
+        method: "PUT",
+        url: `/products/${productObject.id}`,
+        withCredentials: true,
+        data: productObject
+    }
+    return requestBackend(configuration);
+}
+
+export function inserNewProduct(productObject: ProductDTO): AxiosPromise {
+    const configuration: AxiosRequestConfig = {
+        method: "POST",
+        url: "/products",
+        withCredentials: true,
+        data: productObject
+    }
+    return requestBackend(configuration)
+}
