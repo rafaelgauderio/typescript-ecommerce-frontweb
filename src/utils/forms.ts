@@ -60,7 +60,7 @@ export function addFieldDirtyAndValidatedData(inputs: any, fieldName: string) {
     return validatedData;
 }
 
-export function turnAllFieldsDirty(inputs: any) {
+export function turnAllFieldsDirty(inputs: any): any {
     const newDirtyInputs: any = {};
     for (const fieldName in inputs) {
         newDirtyInputs[fieldName] = {
@@ -70,20 +70,26 @@ export function turnAllFieldsDirty(inputs: any) {
     return newDirtyInputs;
 }
 
-export function validateAllFields(inputs: any) {
+export function validateAllFields(inputs: any): any {
     const newValidadeInputs: any = {};
     for (const fieldName in inputs) {
-        if (inputs[fieldName].validation == undefined) {
-            const isFieldInvalid: boolean = inputs[fieldName].validateFields(inputs[fieldName].value);
+        if (inputs[fieldName].validation != undefined) {
+            // verifica se o valor do input no campo fieldname é valido
+            const isFieldInvalid: boolean = !inputs[fieldName].validateFields(inputs[fieldName].value);
+            // adiciona o valor invalid ao novo objeto
             newValidadeInputs[fieldName] = { ...inputs[fieldName], invalid: isFieldInvalid.toString() };
         } else {
+            // senão estiver definido o campo validation, o novo objeto vai ser o objeto inputs anterior sem alterar nada
             newValidadeInputs[fieldName] = {
                 ...inputs[fieldName]
             }
         }
     }
-
     return newValidadeInputs;
+}
 
-
+export function validateAllFieldsAfterDirtyAllFiedls(inputs: any): any {
+    // validar os campos após adicionar o campo dirty = true deles
+    const inputsValidateAfterDirty: any = validateAllFields(turnAllFieldsDirty(inputs));
+    return inputsValidateAfterDirty;
 }
