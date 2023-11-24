@@ -136,9 +136,14 @@ const ProductForm = () => {
         setFormData(newFormData);
     };
 
-    const handleOnSubmit = (event : any) => {
+    const handleOnSubmit = (event: any) : void =>  {
         event.preventDefault();
-        console.log(inputForms.getFieldValueFromInputObject(formData));
+        const formDataValidatedAfterTurnDiry = inputForms.validateAllFieldsAfterDirtyAllFiedls(formData);
+        if (inputForms.hasAnyInvalidFieldAfterValidateAll(formDataValidatedAfterTurnDiry) == true) {
+            setFormData(formDataValidatedAfterTurnDiry);
+            return; // sai da função e não envia o formulário
+        }
+        //console.log(inputForms.getFieldValueFromInputObject(formData));
     };
 
 
@@ -187,7 +192,7 @@ const ProductForm = () => {
                                         //console.log(newFormData.categories);
                                         setFormData(newFormData);
                                     }}
-                                    isMulti  
+                                    isMulti
                                     onBecameDirty={handleInputBecameDirty}
                                     getOptionLabel={(objeto: any) => objeto.name}
                                     getOptionValue={(objeto: any) => String(objeto.id)
