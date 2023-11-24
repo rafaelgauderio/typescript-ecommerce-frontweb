@@ -244,6 +244,19 @@ a:hover {
   display: none;
 }
 
+.ec-form-global-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-bg-red);
+  font-size: 13px;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px 10px;
+  border: 1px solid var(--color-danger);
+  border-radius: 8px;
+}
+
 .ec-form-input[data-dirty="true"][data-invalid="true"] ~ div {
   display: unset;
 }
@@ -260,7 +273,7 @@ a:hover {
 
 .ec-form-select-container {
   height: unset;
-  padding: unset;    
+  padding: unset;
 }
 
 /*form styles */
