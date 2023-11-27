@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
+// referências explítica no React
+window.React = React
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   //<React.StrictMode>
     <App />
